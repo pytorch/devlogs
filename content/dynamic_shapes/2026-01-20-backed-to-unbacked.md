@@ -5,10 +5,6 @@ date: 2026-01-20
 tags: [dynamic_shapes, unbacked, backed, torch.compile, frontier]
 ---
 
-# Backed to Unbacked: From Guardable to Guardless Shapes in PyTorch
-
-*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk), [@bobrenjc93](https://github.com/bobrenjc93)*
-
 ![Hint stamp](./images/2026-01-20-backed-unbacked-header.jpg)
 
 > **TL;DR** – We expect unbacked dynamic shapes to become the dominant

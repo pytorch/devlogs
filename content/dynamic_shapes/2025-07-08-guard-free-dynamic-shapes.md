@@ -5,9 +5,6 @@ date: 2025-07-08
 tags: [dynamic_shapes, unbacked, dde, guard_free, export, torch.compile]
 ---
 
-# Guard-Free Dynamic Shapes
-
-*By [@laithsakka](https://github.com/laithsakka), [@bdhirsh](https://github.com/bdhirsh), [@angelayi](https://github.com/angelayi), [@colinpeppler](https://github.com/colinpeppler), [@bobrenjc93](https://github.com/bobrenjc93), [@avikchaudhuri](https://github.com/avikchaudhuri), [@aorenste](https://github.com/aorenste), [@pianpwk](https://github.com/pianpwk)*
 
 > **TL;DR** – Data-dependent errors (DDEs) are the dominant barrier to
 > exporting models with dynamic shapes. There is widespread consensus that

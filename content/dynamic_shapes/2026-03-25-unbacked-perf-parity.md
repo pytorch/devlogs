@@ -5,10 +5,6 @@ date: 2026-03-25
 tags: [dynamic_shapes, unbacked, performance, vllm, torchbench, inductor]
 ---
 
-# Unbacked Dynamic Shapes Shouldn't Be Slower — Now They Aren't
-
-*By [@laithsakka](https://github.com/laithsakka)*
-
 ![Backed vs unbacked perf parity](./images/2026-03-25-perf-parity-header.jpg)
 
 > **TL;DR** – Unbacked dynamic shapes had 2x–20% slowdowns on TorchBench
