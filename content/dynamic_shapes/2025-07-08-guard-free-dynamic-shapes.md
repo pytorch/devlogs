@@ -1,6 +1,6 @@
 ---
 title: "Guard-Free Dynamic Shapes"
-author: Laith Sakka (@laithsakka)
+author: Laith Sakka (@laithsakka), Brian Hirsh (@bdhirsh), Angela Yi (@angelayi), Colin Peppler (@colinpeppler), Bob Ren (@bobrenjc93), Avik Chaudhuri (@avikchaudhuri), Aaron Orenstein (@aorenste), Pian Pawakapan (@pianpwk)
 date: 2025-07-08
 tags: [dynamic_shapes, unbacked, dde, guard_free, export, torch.compile]
 ---
@@ -16,7 +16,7 @@ tags: [dynamic_shapes, unbacked, dde, guard_free, export, torch.compile]
 > achieving a **55% reduction** in framework DDEs and saving weeks of
 > engineering time on complex model exports.
 
-![DDE reduction progress](./images/2025-07-08-dde-progress.jpg)
+![DDE reduction progress](/devlogs-hugo-expr/images/2025-07-08-dde-progress.jpg)
 
 ## Why are guard-free dynamic shape graphs necessary?
 
