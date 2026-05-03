@@ -1,3 +1,10 @@
+---
+title: "Your Post Title"
+author: Your Name (@github_handle)
+date: YYYY-MM-DD
+tags: [topic1, topic2]
+---
+
 # Your Post Title
 
 *By [@your_github_handle](https://github.com/your_github_handle) · Month DD, YYYY*

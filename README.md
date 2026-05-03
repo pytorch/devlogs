@@ -28,7 +28,3 @@ PyTorch developers regularly produce deep technical content about design decisio
 4. Open a PR
 
 See the [post template](./_template.md) for the recommended front matter and structure.
-
-## License
-
-Content in this repository is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
