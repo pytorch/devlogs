@@ -4,7 +4,7 @@ languageCode = 'en-us'
 title = 'PyTorch DevLog'
 
 [params]
-  description = 'Developer technical notes — durable, AI-accessible, and open to the OSS community'
+  description = 'Developer technical notes for PyTorch'
 
 [markup]
   [markup.goldmark]
