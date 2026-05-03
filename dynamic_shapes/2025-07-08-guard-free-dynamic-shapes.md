@@ -1,6 +1,8 @@
 ---
 title: "Guard-Free Dynamic Shapes"
+author: Laith Sakka (@laithsakka)
 date: 2025-07-08
+tags: [dynamic_shapes, unbacked, dde, guard_free, export, torch.compile]
 ---
 
 # Guard-Free Dynamic Shapes

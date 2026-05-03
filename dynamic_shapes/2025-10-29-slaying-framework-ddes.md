@@ -1,6 +1,8 @@
 ---
 title: "Slaying Framework Data-Dependent Errors Dragon 🐉"
+author: Laith Sakka (@laithsakka)
 date: 2025-10-29
+tags: [dynamic_shapes, unbacked, dde, export, guard_free, torch.compile]
 ---
 
 # Slaying Framework Data-Dependent Errors Dragon 🐉
