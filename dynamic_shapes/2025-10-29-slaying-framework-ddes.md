@@ -1,11 +1,6 @@
----
-title: "Slaying Framework Data-Dependent Errors Dragon 🐉"
-author: Laith Sakka (@laithsakka)
-date: 2025-10-29
-tags: [dynamic_shapes, unbacked, dde, export, guard_free, torch.compile]
----
-
 # Slaying Framework Data-Dependent Errors Dragon 🐉
+
+*By [@laithsakka](https://github.com/laithsakka) · October 29, 2025*
 
 > **TL;DR** – Framework DDE dragon has been slain! 🐉 We've eliminated the
 > vast majority of framework data-dependent errors — reducing user issues

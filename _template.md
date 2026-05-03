@@ -1,11 +1,6 @@
----
-title: "Your Post Title"
-author: Your Name (@github_handle)
-date: YYYY-MM-DD
-tags: [dynamo, inductor, dynamic_shapes]
----
-
 # Your Post Title
+
+*By [@your_github_handle](https://github.com/your_github_handle) · Month DD, YYYY*
 
 > **TL;DR** – One or two sentence summary of the key takeaway.
 

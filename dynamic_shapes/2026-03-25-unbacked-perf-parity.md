@@ -1,11 +1,6 @@
----
-title: "Unbacked Dynamic Shapes Shouldn't Be Slower — Now They Aren't"
-author: Laith Sakka (@laithsakka)
-date: 2026-03-25
-tags: [dynamic_shapes, unbacked, performance, vllm, torchbench, inductor]
----
-
 # Unbacked Dynamic Shapes Shouldn't Be Slower — Now They Aren't
+
+*By [@laithsakka](https://github.com/laithsakka) · March 25, 2026*
 
 ![Backed vs unbacked perf parity](./images/2026-03-25-perf-parity-header.jpg)
 

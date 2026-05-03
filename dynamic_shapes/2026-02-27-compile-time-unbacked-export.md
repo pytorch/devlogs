@@ -1,11 +1,6 @@
----
-title: "Reducing Compile-Time Overhead in Unbacked-Symbol-Heavy torch.export Traces"
-author: Laith Sakka (@laithsakka), Aditya Venkataraman
-date: 2026-02-27
-tags: [dynamic_shapes, unbacked, torch.export, compile_time, symbolic_shapes]
----
-
 # Reducing Compile-Time Overhead in Unbacked-Symbol-Heavy torch.export Traces
+
+*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk) · February 27, 2026*
 
 ![Compile time reduction](./images/2026-02-27-compile-time-header.jpg)
 

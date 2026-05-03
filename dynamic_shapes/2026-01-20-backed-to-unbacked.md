@@ -1,11 +1,6 @@
----
-title: "Backed to Unbacked: From Guardable to Guardless Shapes in PyTorch"
-author: Laith Sakka (@laithsakka), Aditya Venkataraman (@aditvenk), Bob Ren (@bobrenjc93)
-date: 2026-01-20
-tags: [dynamic_shapes, unbacked, backed, torch.compile, frontier]
----
-
 # Backed to Unbacked: From Guardable to Guardless Shapes in PyTorch
+
+*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk), [@bobrenjc93](https://github.com/bobrenjc93) · January 20, 2026*
 
 ![Hint stamp](./images/2026-01-20-backed-unbacked-header.jpg)
 
