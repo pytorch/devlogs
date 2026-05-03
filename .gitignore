@@ -1,3 +1,4 @@
+public/
+resources/
 node_modules/
-build/
-.docusaurus/
+.hugo_build.lock

@@ -1,0 +1,22 @@
+baseURL = 'https://pytorch.github.io/devlogs/'
+languageCode = 'en-us'
+title = 'PyTorch DevLog'
+
+[params]
+  description = 'Developer technical notes — durable, AI-accessible, and open to the OSS community'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = 'github'
+
+[taxonomies]
+  tag = 'tags'
+
+[menu]
+  [[menu.main]]
+    name = 'GitHub'
+    url = 'https://github.com/pytorch/devlogs'
+    weight = 10

@@ -1,0 +1,30 @@
+{{ define "main" }}
+  {{ if .IsHome }}
+    <h1>{{ .Site.Title }}</h1>
+    <p>{{ .Site.Params.description }}</p>
+
+    {{ range .Site.Sections }}
+      {{ if .Pages }}
+        <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+        <ul class="post-list">
+          {{ range .Pages.ByDate.Reverse }}
+            <li>
+              <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+    {{ end }}
+  {{ else }}
+    <h1>{{ .Title }}</h1>
+    <ul class="post-list">
+      {{ range .Pages.ByDate.Reverse }}
+        <li>
+          <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+{{ end }}
