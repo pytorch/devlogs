@@ -27,4 +27,4 @@ PyTorch developers regularly produce deep technical content about design decisio
 3. Add images under `<topic>/images/`
 4. Open a PR
 
-See the [post template](./_template.md) for the recommended front matter and structure.
+See the [post template](./template.md) for the recommended front matter and structure.

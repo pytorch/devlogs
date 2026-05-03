@@ -1,19 +1,14 @@
 ---
 title: "Your Post Title"
-author: Your Name (@github_handle)
-date: YYYY-MM-DD
+authors: [your_github_handle]
 tags: [topic1, topic2]
 ---
-
-# Your Post Title
-
-*By [@your_github_handle](https://github.com/your_github_handle) · Month DD, YYYY*
 
 > **TL;DR** – One or two sentence summary of the key takeaway.
 
 ## Background / Motivation
 
-Why does this matter?  What problem does it solve?
+Why does this matter? What problem does it solve?
 
 ## Design / Approach
 
@@ -26,7 +21,7 @@ import torch
 
 ## Results / Benchmarks
 
-Numbers, tables, charts (embed images via relative paths or link to external).
+Numbers, tables, charts (embed images via relative paths).
 
 | Configuration | Throughput | Latency |
 |---------------|-----------|---------|
@@ -35,7 +30,7 @@ Numbers, tables, charts (embed images via relative paths or link to external).
 
 ## Open questions / Future work
 
-What remains to be done?  What trade-offs were made?
+What remains to be done? What trade-offs were made?
 
 ## References
 
