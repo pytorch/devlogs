@@ -1,6 +1,11 @@
+---
+title: "Slaying Framework Data-Dependent Errors Dragon 🐉"
+date: 2025-10-29
+---
+
 # Slaying Framework Data-Dependent Errors Dragon 🐉
 
-*By [@laithsakka](https://github.com/laithsakka) · October 29, 2025*
+*By [@laithsakka](https://github.com/laithsakka)*
 
 > **TL;DR** – Framework DDE dragon has been slain! 🐉 We've eliminated the
 > vast majority of framework data-dependent errors — reducing user issues

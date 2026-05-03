@@ -1,6 +1,11 @@
+---
+title: "Reducing Compile-Time Overhead in Unbacked-Symbol-Heavy torch.export Traces"
+date: 2026-02-27
+---
+
 # Reducing Compile-Time Overhead in Unbacked-Symbol-Heavy torch.export Traces
 
-*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk) · February 27, 2026*
+*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk)*
 
 ![Compile time reduction](./images/2026-02-27-compile-time-header.jpg)
 

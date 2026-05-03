@@ -1,6 +1,11 @@
+---
+title: "Backed to Unbacked: From Guardable to Guardless Shapes in PyTorch"
+date: 2026-01-20
+---
+
 # Backed to Unbacked: From Guardable to Guardless Shapes in PyTorch
 
-*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk), [@bobrenjc93](https://github.com/bobrenjc93) · January 20, 2026*
+*By [@laithsakka](https://github.com/laithsakka), [@aditvenk](https://github.com/aditvenk), [@bobrenjc93](https://github.com/bobrenjc93)*
 
 ![Hint stamp](./images/2026-01-20-backed-unbacked-header.jpg)
 

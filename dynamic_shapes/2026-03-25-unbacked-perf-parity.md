@@ -1,6 +1,11 @@
+---
+title: "Unbacked Dynamic Shapes Shouldn't Be Slower — Now They Aren't"
+date: 2026-03-25
+---
+
 # Unbacked Dynamic Shapes Shouldn't Be Slower — Now They Aren't
 
-*By [@laithsakka](https://github.com/laithsakka) · March 25, 2026*
+*By [@laithsakka](https://github.com/laithsakka)*
 
 ![Backed vs unbacked perf parity](./images/2026-03-25-perf-parity-header.jpg)
 

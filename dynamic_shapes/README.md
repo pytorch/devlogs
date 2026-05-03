@@ -1,8 +1,6 @@
 # DevLog: Dynamic Shapes
 
-Technical notes about dynamic shapes in PyTorch — symbolic reasoning,
-backed vs unbacked symbols, guards, shape specialization, `mark_dynamic`,
-and integration with downstream projects like vLLM.
+Technical notes about dynamic shapes in PyTorch.
 
 ## Posts
 
