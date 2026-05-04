@@ -5,8 +5,11 @@
 
     <h2>Topics</h2>
     <ul class="post-list">
+      {{/* Hide empty sections; they re-appear automatically once a post is added. */}}
       {{ range .Site.Sections }}
+        {{ if .Pages }}
         <li><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="date">· {{ len .Pages }} posts</span></li>
+        {{ end }}
       {{ end }}
     </ul>
   {{ else }}
