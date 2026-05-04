@@ -3,13 +3,23 @@
     <h1>{{ .Site.Title }}</h1>
     {{ .Content }}
 
+    <h2>Recent Posts</h2>
+    <ul class="post-list">
+      {{ range first 5 .Site.RegularPages.ByDate.Reverse }}
+        <li>
+          <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ul>
+
     <h2>Topics</h2>
     <ul class="post-list">
-      {{/* Hide empty sections; they re-appear automatically once a post is added. */}}
       {{ range .Site.Sections }}
-        {{ if .Pages }}
-        <li><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="date">· {{ len .Pages }} posts</span></li>
-        {{ end }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+          {{ with .Params.description }}<span class="date"> — {{ . }}</span>{{ end }}
+        </li>
       {{ end }}
     </ul>
   {{ else }}
