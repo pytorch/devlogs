@@ -6,9 +6,11 @@
     </div>
 
     <h2>Most Recent 10 Posts</h2>
+    {{ $i := 0 }}
     {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
+      {{ $i = add $i 1 }}
       <div class="post-card">
-        <h3><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>
+        <h3>{{ $i }}. <a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
         </div>
