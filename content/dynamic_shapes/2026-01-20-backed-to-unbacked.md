@@ -5,7 +5,7 @@ date: 2026-01-20
 tags: [dynamic_shapes, unbacked, backed, torch.compile, frontier]
 ---
 
-![Hint stamp](/images/dynamic_shapes/2026-01-20-backed-unbacked-header.jpg)
+![Hint stamp](/devlogs/images/dynamic_shapes/2026-01-20-backed-unbacked-header.jpg)
 
 > **TL;DR** – We expect unbacked dynamic shapes to become the dominant
 > shape mechanism for Frontier-style workloads due to their better
