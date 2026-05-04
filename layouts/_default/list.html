@@ -14,7 +14,7 @@
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
         </div>
-        <p class="summary-text">{{ truncate 300 (.Plain | htmlUnescape) }}</p>
+        <p class="summary-text">{{ truncate 400 (.Plain | htmlUnescape) }}</p>
         <a href="{{ .Permalink }}">Read more →</a>
       </div>
     {{ end }}
@@ -43,7 +43,7 @@
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
         </div>
-        <p class="summary-text">{{ truncate 300 (.Plain | htmlUnescape) }}</p>
+        <p class="summary-text">{{ truncate 400 (.Plain | htmlUnescape) }}</p>
         <a href="{{ .Permalink }}">Read more →</a>
       </div>
     {{ end }}
