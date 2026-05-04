@@ -1,54 +1,60 @@
 {{ define "main" }}
   {{ if .IsHome }}
-    <div class="hero">
+    <div class="site-intro">
       <h1>{{ .Site.Title }}</h1>
       {{ .Content }}
     </div>
 
-    <h2>Most Recent 10 Logs</h2>
-    {{ $i := 0 }}
+    <h2 class="section-heading">Recent</h2>
     {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
-      {{ $i = add $i 1 }}
-      <div class="post-card">
-        <h3>{{ $i }}. <a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>
+      <div class="post-entry">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
+          {{ with .Params.tags }}
+            <br>
+            {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+          {{ end }}
         </div>
-        <p class="summary-text">{{ truncate 400 (.Plain | htmlUnescape) }}</p>
-        <a href="{{ .Permalink }}">Read more →</a>
+        <p class="summary">{{ truncate 700 (.Content | replaceRE "<h[1-6][^>]*>.*?</h[1-6]>" "" | replaceRE "<img[^>]*/?>" "" | replaceRE "<blockquote[^>]*>.*?</blockquote>" "" | plainify | htmlUnescape) }}</p>
+        <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
       </div>
     {{ end }}
 
-    <h2>Topics <span class="meta">— click on a topic to see all related blogs</span></h2>
-    <ul class="post-list">
+    <h2 class="section-heading">Topics <span class="meta">— click on a topic to see all related blogs</span></h2>
+    <ul class="topic-list">
       {{ range .Site.Sections }}
         <li>
           <a href="{{ .Permalink }}">{{ .Title }}</a>
-          {{ with .Params.description }}<span class="date"> — {{ . }}</span>{{ end }}
-          <span class="date"> · {{ len .Pages }} blogs</span>
+          <span class="count">{{ len .Pages }}</span>
+          {{ with .Params.description }}<span class="count">— {{ . }}</span>{{ end }}
         </li>
       {{ end }}
     </ul>
   {{ else }}
     <nav class="breadcrumb">
-      <a href="{{ .Site.BaseURL }}">All Logs</a>
+      <a href="{{ .Site.BaseURL }}">Home</a> / {{ .Title }}
     </nav>
     <h1>{{ .Title }}</h1>
     {{ with .Params.description }}<p class="meta">{{ . }}</p>{{ end }}
 
-    <h2>Recent</h2>
+    <h2 class="section-heading">Recent</h2>
     {{ range first 5 .Pages.ByDate.Reverse }}
-      <div class="post-card">
+      <div class="post-entry">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
+          {{ with .Params.tags }}
+            <br>
+            {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+          {{ end }}
         </div>
-        <p class="summary-text">{{ truncate 400 (.Plain | htmlUnescape) }}</p>
-        <a href="{{ .Permalink }}">Read more →</a>
+        <p class="summary">{{ truncate 700 (.Content | replaceRE "<h[1-6][^>]*>.*?</h[1-6]>" "" | replaceRE "<img[^>]*/?>" "" | replaceRE "<blockquote[^>]*>.*?</blockquote>" "" | plainify | htmlUnescape) }}</p>
+        <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
       </div>
     {{ end }}
 
-    <h2>All {{ .Title }} Logs</h2>
+    <h2 class="section-heading">All {{ .Title }} Logs</h2>
     <ul class="post-list">
       {{ range .Pages.ByDate.Reverse }}
         <li>
