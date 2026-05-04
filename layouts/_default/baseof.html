@@ -19,7 +19,7 @@
     {{ if not .IsHome }}
     <aside class="sidebar">
       {{ if .IsPage }}
-        <h3><a href="{{ .FirstSection.Permalink }}">{{ .FirstSection.Title }}</a></h3>
+        <h3><a href="{{ .FirstSection.Permalink }}">{{ .FirstSection.Title }} (recent)</a></h3>
         <ul>
           {{ range first 5 .FirstSection.Pages.ByDate.Reverse }}
             <li><a href="{{ .Permalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>{{ .Title }}</a></li>
@@ -29,7 +29,7 @@
           {{ end }}
         </ul>
       {{ else }}
-        <h3>{{ .Title }}</h3>
+        <h3>{{ .Title }} (recent)</h3>
         <ul>
           {{ range first 5 .Pages.ByDate.Reverse }}
             <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>

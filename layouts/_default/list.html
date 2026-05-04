@@ -9,19 +9,28 @@
         <li>
           <span class="date">{{ .Date.Format "2006-01-02" }}</span>
           <a href="{{ .Permalink }}">{{ .Title }}</a>
+          <span class="tag">{{ .FirstSection.Title }}</span>
         </li>
       {{ end }}
     </ul>
 
     <h2>Topics</h2>
-    <ul class="post-list">
-      {{ range .Site.Sections }}
-        <li>
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
-          {{ with .Params.description }}<span class="date"> — {{ . }}</span>{{ end }}
-        </li>
+    {{ range .Site.Sections }}
+      <h3><a href="{{ .Permalink }}">{{ .Title }}</a>{{ with .Params.description }} <span class="date">— {{ . }}</span>{{ end }}</h3>
+      {{ if .Pages }}
+      <ul class="post-list">
+        {{ range first 5 .Pages.ByDate.Reverse }}
+          <li>
+            <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </li>
+        {{ end }}
+        {{ if gt (len .Pages) 5 }}
+          <li><a href="{{ .Permalink }}">See all →</a></li>
+        {{ end }}
+      </ul>
       {{ end }}
-    </ul>
+    {{ end }}
   {{ else }}
     <nav class="breadcrumb">
       <a href="{{ .Site.BaseURL }}">All Posts</a>
