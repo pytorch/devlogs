@@ -21,6 +21,7 @@
         <li>
           <a href="{{ .Permalink }}">{{ .Title }}</a>
           {{ with .Params.description }}<span class="date"> — {{ . }}</span>{{ end }}
+          <span class="date"> · {{ len .Pages }} posts</span>
         </li>
       {{ end }}
     </ul>
