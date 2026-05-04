@@ -29,20 +29,15 @@
           {{ end }}
         </ul>
       {{ else }}
-        {{/* Hide empty sections; they re-appear automatically once a post is added. */}}
-        {{ range .Site.Sections }}
-          {{ if .Pages }}
-          <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
-          <ul>
-            {{ range first 5 .Pages.ByDate.Reverse }}
-              <li><a href="{{ .Permalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>{{ .Title }}</a></li>
-            {{ end }}
-            {{ if gt (len .Pages) 5 }}
-              <li><a href="{{ .Permalink }}">See all →</a></li>
-            {{ end }}
-          </ul>
+        <h3>{{ .Title }}</h3>
+        <ul>
+          {{ range first 5 .Pages.ByDate.Reverse }}
+            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
           {{ end }}
-        {{ end }}
+          {{ if gt (len .Pages) 5 }}
+            <li><a href="{{ .Permalink }}">See all →</a></li>
+          {{ end }}
+        </ul>
       {{ end }}
     </aside>
     {{ end }}
