@@ -351,15 +351,8 @@ a.tag:hover {
 
 /* Post cards */
 .post-card {
-  padding: 1.25rem;
-  border: 1px solid var(--color-border-muted);
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  transition: border-color 0.15s;
-}
-
-.post-card:hover {
-  border-color: var(--pytorch-red);
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-border-muted);
 }
 
 .post-card p h1,

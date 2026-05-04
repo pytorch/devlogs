@@ -305,7 +305,3 @@ There are basically three places where the internal state of the dispatcher is s
 The active key set for a given op call is: **(tensor keys | TLS included) - TLS excluded**.
 
 The dispatch keys are numbered so that their order determines dispatch priority — the highest key runs first.
-
-## References
-
-- [Original post on dev-discuss](https://dev-discuss.pytorch.org/t/how-does-the-dispatcher-work/3358)

@@ -21,7 +21,9 @@ import torch
 
 ## Results / Benchmarks
 
-Numbers, tables, charts (embed images via relative paths).
+Numbers, tables, charts.
+
+**Images:** Place images in `static/images/<topic>/` and reference them as `/images/<topic>/filename.png`. Note: images won't render when viewing the `.md` file on GitHub — they only render on the Hugo site.
 
 | Configuration | Throughput | Latency |
 |---------------|-----------|---------|
