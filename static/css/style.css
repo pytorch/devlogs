@@ -328,7 +328,18 @@ a.tag:hover {
 /* Post cards */
 .post-card {
   padding: 1.25rem 0;
-  border-bottom: 1px solid var(--color-border-muted);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: 0.5rem;
+}
+
+.post-card p h1,
+.post-card p h2,
+.post-card p h3,
+.post-card p h4 {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  border: none;
+  padding: 0;
 }
 
 .post-card h3 {

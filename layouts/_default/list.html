@@ -10,7 +10,7 @@
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
         </div>
-        <p>{{ .Summary }}</p>
+        <p>{{ truncate 250 .Plain }}</p>
         <a href="{{ .Permalink }}">Read more →</a>
       </div>
     {{ end }}
@@ -30,6 +30,21 @@
       <a href="{{ .Site.BaseURL }}">All Posts</a>
     </nav>
     <h1>{{ .Title }}</h1>
+    {{ with .Params.description }}<p class="meta">{{ . }}</p>{{ end }}
+
+    <h2>Recent</h2>
+    {{ range first 5 .Pages.ByDate.Reverse }}
+      <div class="post-card">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <div class="meta">
+          {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
+        </div>
+        <p>{{ truncate 250 .Plain }}</p>
+        <a href="{{ .Permalink }}">Read more →</a>
+      </div>
+    {{ end }}
+
+    <h2>All Posts</h2>
     <ul class="post-list">
       {{ range .Pages.ByDate.Reverse }}
         <li>
