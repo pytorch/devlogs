@@ -6,7 +6,7 @@ title = 'PyTorch DevLog'
 [params]
   description = 'Developer technical notes for PyTorch'
 
-summaryLength = 30
+summaryLength = 60
 
 [markup]
   [markup.goldmark]
