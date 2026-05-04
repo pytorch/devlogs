@@ -23,6 +23,9 @@
       {{ end }}
     </ul>
   {{ else }}
+    <nav class="breadcrumb">
+      <a href="{{ .Site.BaseURL }}">All Posts</a>
+    </nav>
     <h1>{{ .Title }}</h1>
     <ul class="post-list">
       {{ range .Pages.ByDate.Reverse }}

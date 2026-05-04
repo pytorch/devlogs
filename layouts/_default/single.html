@@ -1,4 +1,7 @@
 {{ define "main" }}
+  <nav class="breadcrumb">
+    <a href="{{ .Site.BaseURL }}">All Posts</a> / <a href="{{ .FirstSection.Permalink }}">{{ .FirstSection.Title }}</a>
+  </nav>
   <article>
     <h1>{{ .Title }}</h1>
     <div class="meta">

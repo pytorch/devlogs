@@ -261,6 +261,23 @@ tbody tr:hover {
   background: var(--color-table-hover);
 }
 
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--pytorch-red);
+  text-decoration: underline;
+}
+
 /* Article meta */
 .meta {
   color: var(--color-text-muted);
