@@ -14,12 +14,12 @@
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
         </div>
-        <div class="summary-box">{{ .Summary }}</div>
+        <p class="summary-text">{{ truncate 300 .Plain }}</p>
         <a href="{{ .Permalink }}">Read more →</a>
       </div>
     {{ end }}
 
-    <h2>Topics</h2>
+    <h2>Topics <span class="meta">— click on a topic to see all related posts</span></h2>
     <ul class="post-list">
       {{ range .Site.Sections }}
         <li>
@@ -43,7 +43,7 @@
         <div class="meta">
           {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
         </div>
-        <div class="summary-box">{{ .Summary }}</div>
+        <p class="summary-text">{{ truncate 300 .Plain }}</p>
         <a href="{{ .Permalink }}">Read more →</a>
       </div>
     {{ end }}
