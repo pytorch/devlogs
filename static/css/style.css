@@ -1,9 +1,9 @@
-/* PyTorch DevLog — Blue Theme */
+/* PyTorch DevLog Theme */
 
 :root {
-  --accent: #2563eb;
-  --accent-soft: #dbeafe;
-  --accent-hover: #1d4ed8;
+  --accent: #de3412;
+  --accent-soft: #fef2f0;
+  --accent-hover: #b82a0e;
 
   --color-text: #1e293b;
   --color-text-muted: #64748b;
@@ -22,9 +22,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --accent: #60a5fa;
-    --accent-soft: #1e3a5f;
-    --accent-hover: #93bbfd;
+    --accent: #F2765D;
+    --accent-soft: #3d1a10;
+    --accent-hover: #f9a08d;
     --color-text: #e2e8f0;
     --color-text-muted: #94a3b8;
     --color-heading: #f8fafc;
@@ -288,7 +288,7 @@ a.tag:hover {
 
 .post-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+  box-shadow: 0 2px 12px rgba(222, 52, 18, 0.08);
   transform: translateY(-1px);
 }
 
