@@ -48,7 +48,7 @@
       </div>
     {{ end }}
 
-    <h2>All Logs</h2>
+    <h2>All {{ .Title }} Logs</h2>
     <ul class="post-list">
       {{ range .Pages.ByDate.Reverse }}
         <li>
