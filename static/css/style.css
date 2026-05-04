@@ -1,8 +1,8 @@
 /* PyTorch DevLog theme — derived from pytorch_sphinx_theme2 token set */
 
 :root {
-  --pytorch-red: #de3412;
-  --pytorch-red-soft: #F9BFB4;
+  --pytorch-red: #2563eb;
+  --pytorch-red-soft: #dbeafe;
 
   --color-text: #222832;
   --color-text-muted: #6c6c6d;
@@ -26,7 +26,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --pytorch-red: #F2765D;
+    --pytorch-red: #60a5fa;
     --color-text: #ced6dd;
     --color-text-muted: #9ca4af;
     --color-heading: #ffffff;
@@ -36,7 +36,7 @@
     --color-border-muted: #29313d;
     --color-link: var(--pytorch-red);
     --color-link-hover: var(--pytorch-red);
-    --color-table-hover: #711B09;
+    --color-table-hover: #1e3a5f;
   }
 }
 
@@ -287,7 +287,7 @@ tbody tr:hover {
 
 .tag {
   display: inline-block;
-  background: rgba(222, 52, 18, 0.1);
+  background: rgba(37, 99, 235, 0.1);
   color: var(--pytorch-red);
   padding: 0.15rem 0.6rem;
   border-radius: 12px;
