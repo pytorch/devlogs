@@ -3,7 +3,7 @@
     <h1>{{ .Site.Title }}</h1>
     {{ .Content }}
 
-    <h2>Recent Posts</h2>
+    <h2>Most Recent 10 Posts</h2>
     {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
       <div class="post-card">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>

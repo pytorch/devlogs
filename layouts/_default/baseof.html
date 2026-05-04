@@ -16,19 +16,6 @@
     </nav>
   </header>
   <div class="wrapper">
-    {{ if .IsPage }}
-    <aside class="sidebar">
-      <h3><a href="{{ .FirstSection.Permalink }}">{{ .FirstSection.Title }} (recent)</a></h3>
-      <ul>
-        {{ range first 5 .FirstSection.Pages.ByDate.Reverse }}
-          <li><a href="{{ .Permalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>{{ .Title }}</a></li>
-        {{ end }}
-        {{ if gt (len .FirstSection.Pages) 5 }}
-          <li><a href="{{ .FirstSection.Permalink }}">See all →</a></li>
-        {{ end }}
-      </ul>
-    </aside>
-    {{ end }}
     <div class="content">
       {{ block "main" . }}{{ end }}
     </div>

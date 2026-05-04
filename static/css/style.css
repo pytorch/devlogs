@@ -383,11 +383,8 @@ a.tag:hover {
   overflow: hidden;
 }
 
-.summary-box h1,
-.summary-box h2,
-.summary-box h3,
-.summary-box h4 {
-  font-size: 0.85rem;
+.summary-box * {
+  font-size: 0.85rem !important;
   margin: 0.25rem 0;
   border: none;
   padding: 0;
