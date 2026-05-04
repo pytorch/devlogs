@@ -5,7 +5,7 @@
       {{ .Content }}
     </div>
 
-    <h2>Most Recent 10 Posts</h2>
+    <h2>Most Recent 10 Logs</h2>
     {{ $i := 0 }}
     {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
       {{ $i = add $i 1 }}
@@ -19,19 +19,19 @@
       </div>
     {{ end }}
 
-    <h2>Topics <span class="meta">— click on a topic to see all related posts</span></h2>
+    <h2>Topics <span class="meta">— click on a topic to see all related blogs</span></h2>
     <ul class="post-list">
       {{ range .Site.Sections }}
         <li>
           <a href="{{ .Permalink }}">{{ .Title }}</a>
           {{ with .Params.description }}<span class="date"> — {{ . }}</span>{{ end }}
-          <span class="date"> · {{ len .Pages }} posts</span>
+          <span class="date"> · {{ len .Pages }} blogs</span>
         </li>
       {{ end }}
     </ul>
   {{ else }}
     <nav class="breadcrumb">
-      <a href="{{ .Site.BaseURL }}">All Posts</a>
+      <a href="{{ .Site.BaseURL }}">All Logs</a>
     </nav>
     <h1>{{ .Title }}</h1>
     {{ with .Params.description }}<p class="meta">{{ . }}</p>{{ end }}
@@ -48,7 +48,7 @@
       </div>
     {{ end }}
 
-    <h2>All Posts</h2>
+    <h2>All Logs</h2>
     <ul class="post-list">
       {{ range .Pages.ByDate.Reverse }}
         <li>
