@@ -164,8 +164,8 @@ code, pre, kbd, samp {
 }
 
 code {
-  background: var(--accent-soft);
-  color: var(--accent-hover);
+  background: var(--color-surface);
+  color: var(--color-text);
   padding: 0.15em 0.4em;
   border-radius: 4px;
 }
