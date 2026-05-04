@@ -325,6 +325,40 @@ a.tag:hover {
 .post-list a { text-decoration: none; }
 .post-list a:hover { text-decoration: underline; }
 
+/* Post cards */
+.post-card {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.post-card h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.25rem;
+}
+
+.post-card h3 a {
+  text-decoration: none;
+}
+
+.post-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.post-card p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-card > a {
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.post-card > a:hover {
+  text-decoration: underline;
+}
+
 /* Footer */
 footer {
   margin-top: 3rem;

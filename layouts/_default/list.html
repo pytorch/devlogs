@@ -4,15 +4,16 @@
     {{ .Content }}
 
     <h2>Recent Posts</h2>
-    <ul class="post-list">
-      {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
-        <li>
-          <span class="date">{{ .Date.Format "2006-01-02" }}</span>
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
-          <span class="tag">{{ .FirstSection.Title }}</span>
-        </li>
-      {{ end }}
-    </ul>
+    {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
+      <div class="post-card">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>
+        <div class="meta">
+          {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
+        </div>
+        <p>{{ .Summary }}</p>
+        <a href="{{ .Permalink }}">Read more →</a>
+      </div>
+    {{ end }}
 
     <h2>Topics</h2>
     <ul class="post-list">
