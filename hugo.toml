@@ -1,4 +1,4 @@
-baseURL = 'https://laithsakka.github.io/devlogs-hugo-expr/'
+baseURL = 'https://docs.pytorch.org/devlogs/'
 ignoreFiles = ['README\\.md$']
 languageCode = 'en-us'
 title = 'PyTorch DevLog'
