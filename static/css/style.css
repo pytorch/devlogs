@@ -370,6 +370,34 @@ a.tag:hover {
   text-decoration: underline;
 }
 
+/* Summary box for posts without description */
+.summary-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-muted);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+  max-height: 12rem;
+  overflow: hidden;
+}
+
+.summary-box h1,
+.summary-box h2,
+.summary-box h3,
+.summary-box h4 {
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+  border: none;
+  padding: 0;
+}
+
+.summary-box img {
+  max-height: 4rem;
+  margin: 0.25rem 0;
+}
+
 /* Footer */
 footer {
   margin-top: 3rem;
