@@ -1,7 +1,9 @@
 {{ define "main" }}
   {{ if .IsHome }}
-    <h1>{{ .Site.Title }}</h1>
-    {{ .Content }}
+    <div class="hero">
+      <h1>{{ .Site.Title }}</h1>
+      {{ .Content }}
+    </div>
 
     <h2>Most Recent 10 Posts</h2>
     {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
