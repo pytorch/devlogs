@@ -1,11 +1,11 @@
 ---
-
-# Dynamo Isolate Recompiles for torch.compile
-authors: Xiao Fu(@fxdawnn), William Wen(williamwen42), Animesh Jain(anijain2305), Laith Sakka(laithsakka)
+title: "Dynamo Isolate Recompiles for torch.compile"
+date: 2026-05-04
+author: "Xiao Fu(@fxdawnn), William Wen(williamwen42), Animesh Jain(anijain2305), Laith Sakka(laithsakka)"
 tags: [dynamo, torch.compile, caching, recompilation]
+---
 
 > **TL;DR** – We introduce `isolate_recompiles=True` for `torch.compile`, which gives each invocation its own isolated cache bucket — solving recompile limit collisions in factory patterns and dynamic shapes dispatch by refactoring Dynamo's cache from per code-object to per `torch.compile()` invocation.
-> 
 
 ## Background / Motivation
 

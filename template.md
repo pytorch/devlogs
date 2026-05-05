@@ -1,8 +1,18 @@
 ---
 title: "Your Post Title"
-authors: [your_github_handle]
+date: 2026-01-01
+author: "@your_github_handle"
 tags: [topic1, topic2]
 ---
+
+<!-- Example frontmatter:
+---
+title: "Speeding Up Dynamic Shape Tracing by 3x"
+date: 2026-03-25
+author: "Laith Sakka (@laithsakka), Bob Ren (@bobrenjc93)"
+tags: [dynamo, performance, tracing]
+---
+-->
 
 > **TL;DR** – One or two sentence summary of the key takeaway.
 
