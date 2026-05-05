@@ -1,6 +1,6 @@
 ---
 
-## title: "Dynamo Isolate Recompiles for torch.compile"
+# Dynamo Isolate Recompiles for torch.compile
 authors: Xiao Fu(@fxdawnn), William Wen(williamwen42), Animesh Jain(anijain2305), Laith Sakka(laithsakka)
 tags: [dynamo, torch.compile, caching, recompilation]
 
