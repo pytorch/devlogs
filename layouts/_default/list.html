@@ -5,7 +5,7 @@
       {{ .Content }}
     </div>
 
-    {{ range .Site.Sections }}
+    {{ range .Site.Sections.ByLastmod.Reverse }}
       <h2 class="section-heading"><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="meta">({{ len .Pages }} posts) · <a href="{{ .Permalink }}">all posts →</a></span></h2>
       {{ range first 3 .Pages.ByDate.Reverse }}
         <div class="post-entry">
