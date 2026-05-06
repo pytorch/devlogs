@@ -5,32 +5,23 @@
       {{ .Content }}
     </div>
 
-    <h2 class="section-heading">Recent</h2>
-    {{ range first 10 .Site.RegularPages.ByDate.Reverse }}
-      <div class="post-entry">
-        <h3><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="tag">{{ .FirstSection.Title }}</span></h3>
-        <div class="meta">
-          {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
-          {{ with .Params.tags }}
-            <br>
-            {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
-          {{ end }}
+    {{ range .Site.Sections }}
+      <h2 class="section-heading"><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="meta">({{ len .Pages }} posts) · <a href="{{ .Permalink }}">all posts →</a></span></h2>
+      {{ range first 3 .Pages.ByDate.Reverse }}
+        <div class="post-entry">
+          <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+          <div class="meta">
+            {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
+            {{ with .Params.tags }}
+              <br>
+              {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+            {{ end }}
+          </div>
+          <p class="summary">{{ truncate 700 (.Content | replaceRE "<h[1-6][^>]*>.*?</h[1-6]>" "" | replaceRE "<img[^>]*/?>" "" | replaceRE "<blockquote[^>]*>.*?</blockquote>" "" | plainify | htmlUnescape) }}</p>
+          <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
         </div>
-        <p class="summary">{{ truncate 700 (.Content | replaceRE "<h[1-6][^>]*>.*?</h[1-6]>" "" | replaceRE "<img[^>]*/?>" "" | replaceRE "<blockquote[^>]*>.*?</blockquote>" "" | plainify | htmlUnescape) }}</p>
-        <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
-      </div>
-    {{ end }}
-
-    <h2 class="section-heading">Topics <span class="meta">— click on a topic to see all related blogs</span></h2>
-    <ul class="topic-list">
-      {{ range .Site.Sections }}
-        <li>
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
-          <span class="count">{{ len .Pages }}</span>
-          {{ with .Params.description }}<span class="count">— {{ . }}</span>{{ end }}
-        </li>
       {{ end }}
-    </ul>
+    {{ end }}
   {{ else }}
     <nav class="breadcrumb">
       <a href="{{ .Site.BaseURL }}">Home</a> / {{ .Title }}
