@@ -1,0 +1,68 @@
+name: Lint devlog posts
+
+on:
+  pull_request:
+    paths:
+      - 'content/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check content files
+        run: |
+          errors=0
+
+          # Check for missing .md extension
+          for f in $(find content -type f -not -name '_index.md' -not -name '*.md'); do
+            echo "::error file=$f::Missing .md extension"
+            errors=$((errors + 1))
+          done
+
+          # Check frontmatter on all posts
+          for f in $(find content -type f -name '*.md' -not -name '_index.md'); do
+            # Check for opening and closing ---
+            if ! head -1 "$f" | grep -q '^---'; then
+              echo "::error file=$f::Missing frontmatter (no opening ---)"
+              errors=$((errors + 1))
+              continue
+            fi
+            # Find closing --- (line 2+)
+            closing=$(tail -n +2 "$f" | grep -n '^---' | head -1 | cut -d: -f1)
+            if [ -z "$closing" ]; then
+              echo "::error file=$f::Missing frontmatter closing ---"
+              errors=$((errors + 1))
+              continue
+            fi
+            # Extract frontmatter
+            fm=$(head -n $((closing + 1)) "$f")
+            if ! echo "$fm" | grep -q '^title:'; then
+              echo "::error file=$f::Missing 'title' in frontmatter"
+              errors=$((errors + 1))
+            fi
+            if ! echo "$fm" | grep -q '^date:'; then
+              echo "::error file=$f::Missing 'date' in frontmatter"
+              errors=$((errors + 1))
+            fi
+            if ! echo "$fm" | grep -q '^author:'; then
+              echo "::error file=$f::Missing 'author' in frontmatter"
+              errors=$((errors + 1))
+            fi
+          done
+
+          # Check for sections missing _index.md
+          for dir in content/*/; do
+            if [ ! -f "${dir}_index.md" ]; then
+              echo "::error::Section ${dir} is missing _index.md"
+              errors=$((errors + 1))
+            fi
+          done
+
+          if [ $errors -gt 0 ]; then
+            echo ""
+            echo "Found $errors error(s). See template.md for the expected format."
+            exit 1
+          fi
+          echo "All checks passed."
