@@ -5,9 +5,20 @@
       {{ .Content }}
     </div>
 
-    {{ range .Site.Sections.ByLastmod.Reverse }}
-      <h2 class="section-heading"><a href="{{ .Permalink }}">{{ .Title }}</a> <span class="meta">({{ len .Pages }} posts) · <a href="{{ .Permalink }}">all posts →</a></span></h2>
-      {{ range first 3 .Pages.ByDate.Reverse }}
+    {{ $sections := slice }}
+    {{ range .Site.Sections }}
+      {{ if gt (len .Pages) 0 }}
+        {{ $latest := time "1970-01-01" }}
+        {{ range first 1 .Pages.ByDate.Reverse }}
+          {{ $latest = .Date }}
+        {{ end }}
+        {{ $sections = $sections | append (dict "section" . "latest" $latest) }}
+      {{ end }}
+    {{ end }}
+    {{ range sort $sections "latest" "desc" }}
+      {{ $s := .section }}
+      <h2 class="section-heading"><a href="{{ $s.Permalink }}">{{ $s.Title }}</a> <span class="meta">({{ len $s.Pages }} posts) · <a href="{{ $s.Permalink }}">all posts →</a></span></h2>
+      {{ range first 3 $s.Pages.ByDate.Reverse }}
         <div class="post-entry">
           <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
           <div class="meta">
@@ -21,6 +32,24 @@
           <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
         </div>
       {{ end }}
+    {{ end }}
+
+    {{ $emptySections := slice }}
+    {{ range .Site.Sections }}
+      {{ if eq (len .Pages) 0 }}
+        {{ $emptySections = $emptySections | append . }}
+      {{ end }}
+    {{ end }}
+    {{ if $emptySections }}
+      <h2 class="section-heading">Coming Soon</h2>
+      <ul class="topic-list">
+        {{ range $emptySections }}
+          <li>
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+            {{ with .Params.description }}<span class="count">— {{ . }}</span>{{ end }}
+          </li>
+        {{ end }}
+      </ul>
     {{ end }}
   {{ else }}
     <nav class="breadcrumb">
