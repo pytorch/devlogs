@@ -22,6 +22,7 @@ PyTorch developers regularly produce deep technical content about design decisio
 | [`inductor/`](./content/inductor/) | TorchInductor codegen |
 | [`distributed/`](./content/distributed/) | FSDP, DTensor, c10d |
 | [`export/`](./content/export/) | torch.export, AOTInductor |
+| [`cpp/`](./content/cpp/) | C++ and CPython API |
 
 ## Contributing
 
