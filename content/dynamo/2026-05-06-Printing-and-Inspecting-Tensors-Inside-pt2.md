@@ -16,26 +16,7 @@ In a previous post, we introduced `torch._higher_order_ops.print` as a graph-bre
 ## Design / Approach
 ### Decision Tree: Which Tool Should I Use?
 
-```mermaid
-%%{init: {'theme': 'default', 'themeVariables': {'fontSize': '18px'}}}%%
-flowchart TD
-    Start["Want to print/log inside torch.compile?"]
-    D1{"Need custom logic or gradient logging?"}
-    D2{"Printing DTensors?"}
-    D3{"Need backward gradient logging?"}
-    A1["torch._higher_order_ops.print\n(auto [rank N] prefix, rank filtering)"]
-    A2["torch._higher_order_ops.print\n(format-string based, preserved in Inductor)"]
-    A3["@leaf_function\n(forward-only, opaque to compiler)"]
-    A4["@leaf_function + @fn.register_multi_grad_hook\n(forward + backward logging)"]
-
-    Start --> D1
-    D1 -->|No| D2
-    D1 -->|Yes| D3
-    D2 -->|Yes| A1
-    D2 -->|No| A2
-    D3 -->|No| A3
-    D3 -->|Yes| A4
-```
+![Logging/Printing Tool Desision](/devlogs/images/2026-05-06-Printing-and-Inspecting-Tensors-Inside-pt2-decision-tree.jpg)
 ### 1. `torch._higher_order_ops.print` — Forward-Pass Printing
 
 The print HOP now supports **DTensor** and **rank filtering**, making it usable in distributed settings:
