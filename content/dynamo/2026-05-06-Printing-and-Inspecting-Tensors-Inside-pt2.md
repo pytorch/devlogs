@@ -16,7 +16,7 @@ In a previous post, we introduced `torch._higher_order_ops.print` as a graph-bre
 ## Design / Approach
 ### Decision Tree: Which Tool Should I Use?
 
-![Logging/Printing Tool Desision](/devlogs/images/2026-05-06-Printing-and-Inspecting-Tensors-Inside-pt2-decision-tree.jpg)
+![Logging/Printing Tool Desision](/devlogs/images/dynamo/2026-05-06-Printing-and-Inspecting-Tensors-Inside-pt2-decision-tree.jpg)
 ### 1. `torch._higher_order_ops.print` — Forward-Pass Printing
 
 The print HOP now supports **DTensor** and **rank filtering**, making it usable in distributed settings:
