@@ -90,7 +90,7 @@ p { margin-bottom: 1rem; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-article img { max-width: 800px; height: auto; margin: 1.5rem 0; display: block; }
+article img { max-width: 700px; height: auto; margin: 1.5rem 0; display: block; }
 
 ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
 li { margin-bottom: 0.2rem; }
