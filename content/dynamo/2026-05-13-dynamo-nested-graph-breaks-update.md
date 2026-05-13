@@ -1,4 +1,9 @@
-# Nested Graph Breaks: May 2026 Update
+---
+title: "Nested Graph Breaks: May 2026 Update"
+date: 2026-05-13
+author: William Wen (@williamwen42)
+tags: [dynamo, torch.compile, graph-breaks]
+---
 
 ## Summary
 
