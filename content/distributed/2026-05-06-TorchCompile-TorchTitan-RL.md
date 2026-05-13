@@ -1,7 +1,7 @@
 ---
 title: "torch.compile for TorchTitan RL: 6x Faster Unified RL Training"
 date: 2026-05-06
-author: "Lucas Kabela (@lucaskabela), Jiani Wang, Tianyu Liu, Richard Zou, Joe Cummings, Milad Mohammadi" 
+author: "Lucas Kabela (@lucaskabela), Jiani Wang, Tianyu Liu, Richard Zou (@zou3519), Joe Cummings, Milad Mohammadi"
 tags: [torchtitan, rl, torch.compile, distributed, performance]
 ---
 

@@ -49,6 +49,17 @@ jobs:
             if ! echo "$fm" | grep -q '^author:'; then
               echo "::error file=$f::Missing 'author' in frontmatter"
               errors=$((errors + 1))
+            else
+              # Check that every author has a (@username)
+              author_line=$(echo "$fm" | grep '^author:' | sed 's/^author: *"*//' | sed 's/"*$//')
+              IFS=',' read -ra authors <<< "$author_line"
+              for author in "${authors[@]}"; do
+                author=$(echo "$author" | xargs)
+                if [ -n "$author" ] && ! echo "$author" | grep -qE '\(@?[a-zA-Z0-9_-]+\)'; then
+                  echo "::error file=$f::Author '$author' is missing a GitHub handle, e.g. Name (@username)"
+                  errors=$((errors + 1))
+                fi
+              done
             fi
           done
 
