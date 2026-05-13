@@ -44,9 +44,9 @@ To add images:
 1. Upload your images to `static/images/<topic>/` (e.g., `static/images/dynamo/my-chart.png`)
 2. Reference them in your post as `![description](/devlogs/images/<topic>/my-chart.png)`
 
-Images are capped at 600px width by default. To customize the size, use HTML instead:
+Images are capped at 800px width by default. To customize the size, use HTML instead:
 ```html
-<img src="/devlogs/images/<topic>/my-chart.png" width="800" alt="description">
+<img src="/devlogs/images/<topic>/my-chart.png" width="500" alt="description">
 ```
 
 Note: images won't render when viewing the `.md` file on GitHub — they only render on the Hugo site.
