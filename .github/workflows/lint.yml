@@ -62,6 +62,33 @@ jobs:
             fi
           done
 
+          # Check image references in posts
+          for f in $(find content -type f -name '*.md' -not -name '_index.md'); do
+            topic=$(echo "$f" | cut -d/ -f2)
+            for src in $(grep -oE '!\[[^]]*\]\([^)]+\)' "$f" | sed 's/.*(\(.*\))/\1/'); do
+              if ! echo "$src" | grep -qE '^/devlogs/images/'; then
+                echo "::error file=$f::Image '$src' should use path /devlogs/images/<topic>/filename.png"
+                errors=$((errors + 1))
+              else
+                local_path="static${src#/devlogs}"
+                if [ ! -f "$local_path" ]; then
+                  echo "::error file=$f::Image '$src' not found at $local_path"
+                  errors=$((errors + 1))
+                fi
+                img_topic=$(echo "$src" | cut -d/ -f4)
+                if [ "$img_topic" != "$topic" ]; then
+                  echo "::warning file=$f::Image '$src' is in '$img_topic/' but post is in '$topic/'"
+                fi
+              fi
+            done
+          done
+
+          # Check for images incorrectly placed in content/
+          for img in $(find content -type f \( -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.gif' -o -name '*.svg' -o -name '*.webp' \) 2>/dev/null); do
+            echo "::error file=$img::Images should be in static/images/<topic>/, not in content/"
+            errors=$((errors + 1))
+          done
+
           # Check for sections missing _index.md
           for dir in content/*/; do
             if [ ! -f "${dir}_index.md" ]; then
