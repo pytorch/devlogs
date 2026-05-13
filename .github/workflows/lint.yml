@@ -56,8 +56,7 @@ jobs:
               for author in "${authors[@]}"; do
                 author=$(echo "$author" | xargs)
                 if [ -n "$author" ] && ! echo "$author" | grep -qE '\(@?[a-zA-Z0-9_-]+\)'; then
-                  echo "::error file=$f::Author '$author' is missing a GitHub handle, e.g. Name (@username)"
-                  errors=$((errors + 1))
+                  echo "::warning file=$f::Author '$author' is missing a GitHub handle, e.g. Name (@username). Adding a GitHub handle is recommended for giscus comment notifications."
                 fi
               done
             fi
