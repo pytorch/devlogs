@@ -1,0 +1,100 @@
+name: Notify post authors on new discussion
+
+on:
+  discussion:
+    types: [created]
+
+permissions:
+  contents: read
+  discussions: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: github.event.discussion.category.slug == 'show-and-tell'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find post and notify authors
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const title = context.payload.discussion.title;
+            // giscus pathname mapping uses the URL path as the title,
+            // e.g. "devlogs/cpp/2026-05-03-cpython-notes/" or "/devlogs/cpp/2026-05-03-cpython-notes/"
+            // strip leading slash, trailing slash, and "devlogs/" prefix
+            const cleaned = title.replace(/^\//, '').replace(/\/$/, '').replace(/^devlogs\//, '');
+            // cleaned should be like "cpp/2026-05-03-cpython-notes"
+            const parts = cleaned.split('/');
+            if (parts.length < 2) {
+              console.log(`Could not extract topic/slug from discussion title: ${title}`);
+              return;
+            }
+
+            const topic = parts[0];
+            const slug = parts[parts.length - 1];
+            const contentDir = 'content';
+            let foundFile = null;
+
+            const topicDir = path.join(contentDir, topic);
+            if (fs.existsSync(topicDir)) {
+              for (const entry of fs.readdirSync(topicDir)) {
+                if (entry.endsWith('.md') && !entry.startsWith('_') && entry.includes(slug)) {
+                  foundFile = path.join(topicDir, entry);
+                  break;
+                }
+              }
+            }
+
+            if (!foundFile) {
+              console.log(`No content file found for path: ${postPath}`);
+              return;
+            }
+
+            const content = fs.readFileSync(foundFile, 'utf8');
+            const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+            if (!frontmatterMatch) {
+              console.log('No frontmatter found');
+              return;
+            }
+
+            const authorLine = frontmatterMatch[1].match(/^author:\s*"?(.+?)"?\s*$/m);
+            if (!authorLine) {
+              console.log('No author field found');
+              return;
+            }
+
+            // extract GitHub usernames from patterns like (@username) or (username)
+            const usernames = [];
+            const re = /\(?@?(\w[\w-]*)\)?/g;
+            const parts = authorLine[1].split(',');
+            for (const part of parts) {
+              const parenMatch = part.match(/\((@?\w[\w-]*)\)/);
+              if (parenMatch) {
+                usernames.push(parenMatch[1].replace(/^@/, ''));
+              }
+            }
+
+            if (usernames.length === 0) {
+              console.log(`No GitHub usernames found in author field: ${authorLine[1]}`);
+              return;
+            }
+
+            const mentions = usernames.map(u => `@${u}`).join(', ');
+            const body = `👋 Heads up ${mentions} — someone started a discussion on your post!`;
+
+            await github.graphql(`
+              mutation($discussionId: ID!, $body: String!) {
+                addDiscussionComment(input: {discussionId: $discussionId, body: $body}) {
+                  comment { id }
+                }
+              }
+            `, {
+              discussionId: context.payload.discussion.node_id,
+              body: body
+            });
+
+            console.log(`Notified: ${mentions}`);
