@@ -70,8 +70,8 @@ jobs:
             // extract GitHub usernames from patterns like (@username) or (username)
             const usernames = [];
             const re = /\(?@?(\w[\w-]*)\)?/g;
-            const parts = authorLine[1].split(',');
-            for (const part of parts) {
+            const authors = authorLine[1].split(',');
+            for (const part of authors) {
               const parenMatch = part.match(/\((@?\w[\w-]*)\)/);
               if (parenMatch) {
                 usernames.push(parenMatch[1].replace(/^@/, ''));
