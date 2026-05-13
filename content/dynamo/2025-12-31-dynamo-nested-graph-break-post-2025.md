@@ -1,4 +1,9 @@
-# Nested Graph Breaks 2025 Update
+---
+title: "Nested Graph Breaks 2025 Update"
+date: 2025-12-31
+author: William Wen (@williamwen42)
+tags: [dynamo, torch.compile, graph-breaks]
+---
 
 ## Summary
 
