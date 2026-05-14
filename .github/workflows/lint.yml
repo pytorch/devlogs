@@ -3,11 +3,7 @@ name: Lint devlog posts
 on:
   push:
     branches: [main]
-    paths:
-      - 'content/**'
   pull_request:
-    paths:
-      - 'content/**'
 
 jobs:
   lint:
