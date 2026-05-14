@@ -249,7 +249,7 @@ In the course of implementing nested graph breaks, we determined that there were
 
 Below is a diagram summarizing graph break handling:
 
-![Graph break handling diagram](../static/images/dynamo/graph_break_handling.png)
+![Graph break handling diagram](/devlogs/images/dynamo/graph_break_handling.png)
 
 ### Codegen'ing side effects and variables of nested frames
 
