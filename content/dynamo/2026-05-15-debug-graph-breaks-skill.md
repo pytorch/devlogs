@@ -1,4 +1,9 @@
-# Introducing debug-graph-breaks: A Skill for Torch Compile Debugging
+---
+title: "Introducing debug-graph-breaks: A Skill for Torch Compile Debugging"
+date: 2026-05-15
+author: "Arshia Zahed (@azahed98)"
+tags: [dynamo, torch.compile, graph-breaks, skills]
+---
 
 I'm excited to share **debug-graph-breaks**, a new skill for debugging Torch Compile graph breaks, now available in the [meta-pytorch/skills](https://github.com/meta-pytorch/skills/blob/main/skills/debug-graph-breaks/SKILL.md) repository.
 
