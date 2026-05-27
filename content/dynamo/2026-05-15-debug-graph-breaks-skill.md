@@ -1,7 +1,7 @@
 ---
 title: "Introducing debug-graph-breaks: A Skill for Torch Compile Debugging"
 date: 2026-05-15
-author: "Arshia Zahed (@azahed98)"
+author: "Arsh Zahed (@azahed98)"
 tags: [dynamo, torch.compile, graph-breaks, skills]
 ---
 
