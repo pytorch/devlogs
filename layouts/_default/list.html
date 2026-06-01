@@ -5,52 +5,53 @@
       {{ .Content }}
     </div>
 
-    {{ $sections := slice }}
-    {{ range .Site.Sections }}
-      {{ if gt (len .Pages) 0 }}
-        {{ $latest := time "1970-01-01" }}
-        {{ range first 1 .Pages.ByDate.Reverse }}
-          {{ $latest = .Date }}
-        {{ end }}
-        {{ $sections = $sections | append (dict "section" . "latest" $latest) }}
-      {{ end }}
-    {{ end }}
-    {{ range sort $sections "latest" "desc" }}
-      {{ $s := .section }}
-      <h2 class="section-heading"><a href="{{ $s.Permalink }}">{{ $s.Title }}</a> <span class="meta">({{ len $s.Pages }} posts) · <a href="{{ $s.Permalink }}">all posts →</a></span></h2>
-      {{ range first 3 $s.Pages.ByDate.Reverse }}
-        <div class="post-entry">
-          <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
-          <div class="meta">
-            {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
-            {{ with .Params.tags }}
-              <br>
-              {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+    <div class="home-layout">
+      <div class="home-main">
+        <h2 class="section-heading">Recent Posts</h2>
+        {{ $sections := slice }}
+        {{ range .Site.Sections }}
+          {{ if gt (len .Pages) 0 }}
+            {{ $latest := time "1970-01-01" }}
+            {{ range first 1 .Pages.ByDate.Reverse }}
+              {{ $latest = .Date }}
             {{ end }}
-          </div>
-          <p class="summary">{{ truncate 700 (.Content | replaceRE "<h[1-6][^>]*>.*?</h[1-6]>" "" | replaceRE "<img[^>]*/?>" "" | replaceRE "<blockquote[^>]*>.*?</blockquote>" "" | plainify | htmlUnescape) }}</p>
-          <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
-        </div>
-      {{ end }}
-    {{ end }}
-
-    {{ $emptySections := slice }}
-    {{ range .Site.Sections }}
-      {{ if eq (len .Pages) 0 }}
-        {{ $emptySections = $emptySections | append . }}
-      {{ end }}
-    {{ end }}
-    {{ if $emptySections }}
-      <h2 class="section-heading">Coming Soon</h2>
-      <ul class="topic-list">
-        {{ range $emptySections }}
-          <li>
-            <a href="{{ .Permalink }}">{{ .Title }}</a>
-            {{ with .Params.description }}<span class="count">— {{ . }}</span>{{ end }}
-          </li>
+            {{ $sections = $sections | append (dict "section" . "latest" $latest) }}
+          {{ end }}
         {{ end }}
-      </ul>
-    {{ end }}
+        {{ range sort $sections "latest" "desc" }}
+          {{ $s := .section }}
+          <h2 class="section-heading"><a href="{{ $s.Permalink }}">{{ $s.Title }}</a> <span class="meta">({{ len $s.Pages }} posts) · <a href="{{ $s.Permalink }}">all posts →</a></span></h2>
+          {{ range first 3 $s.Pages.ByDate.Reverse }}
+            <div class="post-entry">
+              <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+              <div class="meta">
+                {{ with .Params.author }}{{ . }} · {{ end }}{{ .Date.Format "January 2, 2006" }}
+                {{ with .Params.tags }}
+                  <br>
+                  {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+                {{ end }}
+              </div>
+              <p class="summary">{{ truncate 700 (.Content | replaceRE "<h[1-6][^>]*>.*?</h[1-6]>" "" | replaceRE "<img[^>]*/?>" "" | replaceRE "<blockquote[^>]*>.*?</blockquote>" "" | plainify | htmlUnescape) }}</p>
+              <a class="read-more" href="{{ .Permalink }}">Continue reading →</a>
+            </div>
+          {{ end }}
+        {{ end }}
+      </div>
+
+      {{ if .Site.Sections }}
+        <aside class="home-sidebar">
+          <h2 class="section-heading">All Topics</h2>
+          <ul class="topic-list">
+            {{ range .Site.Sections }}
+              <li>
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                <span class="count">({{ len .Pages }} {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }})</span>
+              </li>
+            {{ end }}
+          </ul>
+        </aside>
+      {{ end }}
+    </div>
   {{ else }}
     <nav class="breadcrumb">
       <a href="{{ .Site.BaseURL }}">Home</a> / {{ .Title }}

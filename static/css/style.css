@@ -280,6 +280,39 @@ footer {
 footer a { color: var(--text-muted); }
 footer a:hover { color: var(--accent); }
 
+.home-layout {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.home-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.home-sidebar .section-heading {
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .home-layout {
+    flex-direction: column;
+  }
+  .home-sidebar {
+    width: 100%;
+    position: static;
+  }
+}
+
 @media (max-width: 600px) {
   .site-header { padding: 1rem; }
   .site-intro h1 { font-size: 1.6rem; }
