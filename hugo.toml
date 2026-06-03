@@ -13,7 +13,7 @@ summaryLength = 60
     [markup.goldmark.renderer]
       unsafe = true
   [markup.highlight]
-    style = 'github'
+    style = 'monokai'
 
 [taxonomies]
   tag = 'tags'
