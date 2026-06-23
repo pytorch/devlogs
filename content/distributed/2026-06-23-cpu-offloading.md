@@ -131,7 +131,3 @@ The torchtitan work is complete. This can be built on further with the following
 
 - Productionizing an offloading pass in core PyTorch when a full joint graph isn't available (there has been some interest in this from Ads and ByteDance); this is in progress in collaboration with Ads.
 - Research into automatic offload policies &mdash; selecting budget, defer, and which tensors to offload without manually specified policy. Our research intern Nurlan Nazaraliyev this summer will be investigating this.
-
-## Acknowledgements
-
-Thanks to Sherlock Huang for the detailed design discussions and onboarding help with torchtitan, Aditya Venkataraman for reviewing this post, and Edward Yang for initial design discussions.
