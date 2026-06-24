@@ -95,7 +95,7 @@ A common use case is to compile several specialized artifacts of the same functi
 **How to dispatch.** Say you have a function f and want specialized artifacts for B == 1, B == 3, a B > 100 version, plus a generic fallback. With the new API this is a few lines — compile one torch.compile wrapper per assumption set and dispatch on the same predicates at runtime:
 
 ```python
-def _rms_norm(x, weight):                    # stand-in for your function
+def f(x, weight):                            # stand-in for your function
     ...
 
 B = ShapeVar("B")
@@ -119,7 +119,7 @@ for example_B, predicates in cases:
     )
     kernels.append(
         torch.compile(
-            _rms_norm,
+            f,
             dynamic_shapes=spec,
             isolate_recompiles=True,         # each spec gets its own cache bucket
         )
