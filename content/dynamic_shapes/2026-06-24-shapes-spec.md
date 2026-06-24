@@ -1,39 +1,19 @@
 ---
-title: "ShapesSpec: A Unified, Descriptive Dynamic-Shapes API"
+title: "A new unbacked, descriptive dynamic-shapes API, unified across PyTorch's major compiler entry points"
 author: Laith Sakka (@laithsakka), Xiao Fu (@fxdawnn)
 date: 2026-06-24
-tags: [dynamic_shapes, unbacked, export, torch.compile, make_fx, api]
+tags: [dynamic_shapes, unbacked, export]
 ---
 
-> **TL;DR** – `ShapesSpec` is a new dynamic-shapes spec API unified across
-> PyTorch's major compiler entry points (`torch.compile`, `torch.export`,
-> `make_fx`, and the not-yet-landed `python_export`). It fills the gaps in
-> `mark_dynamic` / `mark_unbacked` and the `Dim` API, brings native unbacked
-> support to `torch.export` and `make_fx`, and gives you unified, predictable,
-> declarative control over the shapes — and dispatch behavior — of compiled
-> artifacts.
+A new unbacked, descriptive dynamic-shapes API, unified across PyTorch's major compiler entry points
 
-## Motivation
+ShapesSpec: a new dynamic-shapes spec API for PyTorch's compiler entry points. It fills several gaps in the existing tools (mark_dynamic / mark_unbacked, and the Dim API for torch.export), brings native unbacked support to torch.export and make_fx, and completes the unbacked story described earlier by providing unified, predictable, declarative control over the shapes — and dispatch behavior — of compiled artifacts.
 
-The existing tools for controlling dynamic shapes each cover part of the
-problem. `mark_dynamic` / `mark_unbacked` work on `torch.compile`; the `Dim`
-API targets `torch.export`. None of them give a single, declarative way to
-state up front what you know about your shapes and have the compiler be bound
-by it.
+Motivating example
 
-`ShapesSpec` is not syntactic sugar over `mark_unbacked` — it's a real spec
-language. It [completes the unbacked story](./2026-01-20-backed-to-unbacked.md)
-by providing unified, predictable, declarative control over shapes and dispatch.
+Consider the example below: the user has a function project(x, w) with a fast path for small batches and a general matmul path. The user wants to compile a dynamic-shape artifact that takes the fast path.
 
-### Motivating example
-
-Consider the example below: the user has a function `project(x, w)` with a fast
-path for small batches and a general matmul path. The user wants to compile a
-dynamic-shape artifact that takes the fast path.
-
-The `ShapesSpec` says `x` has dynamic shape `[B, D]` and `w` has shape `[D, D]`,
-and the assumption `B < 32` commits this artifact to the fast branch for small
-sizes.
+The ShapesSpec says x has dynamic shape [B, D] and w has shape [D, D], and the assumption B < 32 commits this artifact to the fast branch for small sizes.
 
 ```python
 def project(x, w):
@@ -60,31 +40,19 @@ ep       = torch.export.export(project, args=example, dynamic_shapes=spec)
 gm       = make_fx(project, dynamic_shapes=spec, tracing_mode="fake")(*example)
 ```
 
-## Properties
+The new API isn't syntactic sugar over mark_unbacked — it's a real spec language, with the following features:
 
-**Unified across compiler entry points.** The same API works for
-`torch.compile`, `torch.export`, `make_fx`, and `python_export` (not yet
-landed) — potentially more in the future. One spec object, every entry point.
+Properties
 
-**Unbacked only.** Unbacked shapes align naturally with the idea of a spec: the
-user states properties of the shapes up front, and the compiler is bound by them
-with a guarantee that no silent specializations happen.
+Unified across compiler entry points. The same API works for torch.compile, torch.export, make_fx, and python_export (not yet landed) — potentially more in the future. One spec object, every entry point.
 
-By contrast, dynamic markings for backed shapes act more like hints — the
-compiler can still specialize silently during export time. Existing validations
-like min/max constraints help in narrow cases but are not complete solutions.
+Unbacked only. Unbacked shapes align naturally with the idea of a spec: the user states properties of the shapes up front, and the compiler is bound by them with a guarantee that no silent specializations happen.
 
-**Assumptions up front.** The new API allows specifying constraints the user
-already knows about their shapes and the relations between dynamic inputs —
-ranges, equalities, divisibility, ordering — as assumptions. Assumptions are
-used to:
+By contrast, dynamic markings for backed shapes act more like hints — the compiler can still specialize silently during export time. Existing validations like min/max constraints help in narrow cases but are not complete solutions.
 
-1. Avoid DDEs and remove the need to sprinkle `torch._check` calls inside the
-   model, and
-2. Generate specialized kernels that pick up optimizations based on the assumed
-   properties.
+Assumptions up front. The new API allows specifying constraints the user already knows about their shapes and the relations between dynamic inputs — ranges, equalities, divisibility, ordering — as assumptions. Assumptions are used to (1) avoid DDEs and remove the need to sprinkle torch._check calls inside the model, and (2) generate specialized kernels that pick up optimizations based on the assumed properties.
 
-**Derived expressions.** A `LeafSpec` can also be a derived expression, e.g.
+Derived expressions. A LeafSpec can also be a derived expression, e.g.
 
 ```python
 ParamsSpec({
@@ -93,13 +61,9 @@ ParamsSpec({
 })
 ```
 
-The compiler reads `B` from `x.shape[0]` and implicitly assumes
-`y.shape[0] == 2 * B + 1` — equivalent to writing that equality into
-`assumptions=[...]`.
+The compiler reads B from x.shape[0] and implicitly assumes y.shape[0] == 2 * B + 1 — equivalent to writing that equality into assumptions=[...].
 
-**Dynamic shapes as a property of the compiled function.** The new API allows
-users to specify dynamic shapes as a property of the compiled function by
-attaching the spec to the function definition.
+Dynamic shapes as a property of the compiled function. The new API allows users to specify dynamic shapes as a property of the compiled function by attaching the spec to the function definition.
 
 ```python
 @dynamic_spec(spec)  # spec defined in the example above
@@ -114,40 +78,25 @@ ep       = torch.export.export(project, args=example)
 gm       = make_fx(project, tracing_mode="fake")(*example)
 ```
 
-**Complete spec language.** Supports tensors (`TensorSpec`), scalar int
-arguments (`IntVar` / `ShapeVar`), dicts (`DictSpec`), lists / tuples
-(`SeqSpec`), and user-defined objects of any Python class (`ObjectSpec`).
+Complete spec language. Supports tensors (TensorSpec), scalar int arguments (IntVar / ShapeVar), dicts (DictSpec), lists / tuples (SeqSpec), and user-defined objects of any Python class (ObjectSpec).
 
-## Export now supports unbacked
+Export now supports unbacked
 
-This is a long-overdue addition. Unbacked shapes are a natural fit for export
-because they guarantee no silent specialization
-[during export time](./2026-02-27-compile-time-unbacked-export.md) — which is an
-important export property. The current workaround is `backed_size_oblivious`,
-which is incomplete.
+This is a long-overdue addition. Unbacked shapes are a natural fit for export because they guarantee no silent specialization during export time — which is an important export property. The current workaround is backed_size_oblivious, which is incomplete.
 
-While `NamedDim` + `backed_size_oblivious` is export-time sound, it's clunky. The
-new API replaces it with a cleaner story:
+While NamedDim + backed_size_oblivious is export-time sound, it's clunky. The new API replaces it with a cleaner story:
 
-- Assumptions are a first-class field on `ShapesSpec`, instead of `torch._check`
-  calls scattered through the model or embedded constraints.
-- Invariants the model already establishes with `torch._check` are honored
-  automatically — with `NamedDim` you had to restate them as explicit
-  assumptions.
-- No need to explicitly turn on `backed_size_oblivious`.
+Assumptions are a first-class field on ShapesSpec, instead of torch._check calls scattered through the model or embedded constraints.
 
-## Dispatching to multiple specialized artifacts
+Invariants the model already establishes with torch._check are honored automatically — with NamedDim you had to restate them as explicit assumptions.
 
-A common use case is to compile several specialized artifacts of the same
-function and dispatch to them depending on input at runtime. For now dispatch is
-the user's responsibility — the spec gives you the building block (specialized
-artifacts, cleanly separated), but selecting among them at runtime is yours to
-wire up. A higher-level dispatch abstraction is plausible follow-up work.
+No need to explicitly turn on backed_size_oblivious.
 
-**How to dispatch.** Say you have a function `f` and want specialized artifacts
-for `B == 1`, `B == 3`, a `B > 100` version, plus a generic fallback. With the
-new API this is a few lines — compile one `torch.compile` wrapper per assumption
-set and dispatch on the same predicates at runtime:
+Dispatching to multiple specialized artifacts
+
+A common use case is to compile several specialized artifacts of the same function and dispatch to them depending on input at runtime. For now dispatch is the user's responsibility — the spec gives you the building block (specialized artifacts, cleanly separated), but selecting among them at runtime is yours to wire up. A higher-level dispatch abstraction is plausible follow-up work.
+
+How to dispatch. Say you have a function f and want specialized artifacts for B == 1, B == 3, a B > 100 version, plus a generic fallback. With the new API this is a few lines — compile one torch.compile wrapper per assumption set and dispatch on the same predicates at runtime:
 
 ```python
 def _rms_norm(x, weight):                    # stand-in for your function
@@ -187,20 +136,4 @@ def dispatch(x: torch.Tensor, weight: torch.Tensor) -> torch.Tensor:
     raise AssertionError(f"no kernel for B={x.shape[0]}")
 ```
 
-Note that `isolate_recompiles=True` matters here. See
-[Dynamo: isolate recompiles for torch.compile](../dynamo/2026-05-04-Dynamo-Isolate-Recompiles.md)
-to understand why it is needed.
-
-## Open questions / Future work
-
-- `python_export` support is not yet landed.
-- A higher-level dispatch abstraction (selecting among specialized artifacts at
-  runtime) is plausible follow-up work — today dispatch is the user's
-  responsibility.
-
-## References
-
-- [From Backed to Unbacked](./2026-01-20-backed-to-unbacked.md)
-- [Compile-time unbacked export](./2026-02-27-compile-time-unbacked-export.md)
-- [Unbacked perf parity](./2026-03-25-unbacked-perf-parity.md)
-- [Dynamo: Isolate Recompiles](../dynamo/2026-05-04-Dynamo-Isolate-Recompiles.md)
+Note that isolate_recompiles=True matters here. See Dynamo: isolate recompiles for torch.compile to understand why it is needed.
