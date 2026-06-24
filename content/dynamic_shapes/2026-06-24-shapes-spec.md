@@ -44,15 +44,15 @@ The new API isn't syntactic sugar over mark_unbacked — it's a real spec langua
 
 ## Properties
 
-Unified across compiler entry points. The same API works for torch.compile, torch.export, make_fx, and python_export (not yet landed) — potentially more in the future. One spec object, every entry point.
+**Unified across compiler entry points.** The same API works for torch.compile, torch.export, make_fx, and python_export (not yet landed) — potentially more in the future. One spec object, every entry point.
 
-Unbacked only. Unbacked shapes align naturally with the idea of a spec: the user states properties of the shapes up front, and the compiler is bound by them with a guarantee that no silent specializations happen.
+**Unbacked only.** Unbacked shapes align naturally with the idea of a spec: the user states properties of the shapes up front, and the compiler is bound by them with a guarantee that no silent specializations happen.
 
 By contrast, dynamic markings for backed shapes act more like hints — the compiler can still specialize silently during export time. Existing validations like min/max constraints help in narrow cases but are not complete solutions.
 
-Assumptions up front. The new API allows specifying constraints the user already knows about their shapes and the relations between dynamic inputs — ranges, equalities, divisibility, ordering — as assumptions. Assumptions are used to (1) avoid DDEs and remove the need to sprinkle torch._check calls inside the model, and (2) generate specialized kernels that pick up optimizations based on the assumed properties.
+**Assumptions up front.** The new API allows specifying constraints the user already knows about their shapes and the relations between dynamic inputs — ranges, equalities, divisibility, ordering — as assumptions. Assumptions are used to (1) avoid DDEs and remove the need to sprinkle torch._check calls inside the model, and (2) generate specialized kernels that pick up optimizations based on the assumed properties.
 
-Derived expressions. A LeafSpec can also be a derived expression, e.g.
+**Derived expressions.** A LeafSpec can also be a derived expression, e.g.
 
 ```python
 ParamsSpec({
@@ -63,7 +63,7 @@ ParamsSpec({
 
 The compiler reads B from x.shape[0] and implicitly assumes y.shape[0] == 2 * B + 1 — equivalent to writing that equality into assumptions=[...].
 
-Dynamic shapes as a property of the compiled function. The new API allows users to specify dynamic shapes as a property of the compiled function by attaching the spec to the function definition.
+**Dynamic shapes as a property of the compiled function.** The new API allows users to specify dynamic shapes as a property of the compiled function by attaching the spec to the function definition.
 
 ```python
 @dynamic_spec(spec)  # spec defined in the example above
@@ -78,7 +78,7 @@ ep       = torch.export.export(project, args=example)
 gm       = make_fx(project, tracing_mode="fake")(*example)
 ```
 
-Complete spec language. Supports tensors (TensorSpec), scalar int arguments (IntVar / ShapeVar), dicts (DictSpec), lists / tuples (SeqSpec), and user-defined objects of any Python class (ObjectSpec).
+**Complete spec language.** Supports tensors (TensorSpec), scalar int arguments (IntVar / ShapeVar), dicts (DictSpec), lists / tuples (SeqSpec), and user-defined objects of any Python class (ObjectSpec).
 
 ## Export now supports unbacked
 
@@ -96,7 +96,7 @@ No need to explicitly turn on backed_size_oblivious.
 
 A common use case is to compile several specialized artifacts of the same function and dispatch to them depending on input at runtime. For now dispatch is the user's responsibility — the spec gives you the building block (specialized artifacts, cleanly separated), but selecting among them at runtime is yours to wire up. A higher-level dispatch abstraction is plausible follow-up work.
 
-How to dispatch. Say you have a function f and want specialized artifacts for B == 1, B == 3, a B > 100 version, plus a generic fallback. With the new API this is a few lines — compile one torch.compile wrapper per assumption set and dispatch on the same predicates at runtime:
+**How to dispatch.** Say you have a function f and want specialized artifacts for B == 1, B == 3, a B > 100 version, plus a generic fallback. With the new API this is a few lines — compile one torch.compile wrapper per assumption set and dispatch on the same predicates at runtime:
 
 ```python
 def _rms_norm(x, weight):                    # stand-in for your function
