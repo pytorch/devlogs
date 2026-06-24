@@ -5,7 +5,7 @@ date: 2026-06-24
 tags: [dynamic_shapes, unbacked, export]
 ---
 
-> **TL;DR** – A new dynamic shapes API is available and ready to use! It provides a unified, consistent way for specifying dynamic specs across compile, export and make_fx, brings native unbacked support to torch.export and make_fx, and completes the unbacked story [described earlier](./2026-01-20-backed-to-unbacked.md) by providing unified, predictable, declarative control over the shapes — and dispatch behavior — of compiled artifacts.
+> **TL;DR** – A new dynamic shapes API is available and ready to use! It provides a unified, consistent way for specifying dynamic specs across compile, export and make_fx, brings native unbacked support to torch.export and make_fx, and completes the unbacked story [described earlier](./2026-01-20-backed-to-unbacked.md) by providing unified, predictable, declarative control over the shapes of compiled artifacts.
 
 ## Motivating example
 
