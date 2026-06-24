@@ -5,7 +5,7 @@ date: 2026-06-24
 tags: [dynamic_shapes, unbacked, export]
 ---
 
-> **TL;DR** – ShapesSpec: a new dynamic-shapes spec API for PyTorch's compiler entry points. It fills several gaps in the existing tools (mark_dynamic / mark_unbacked, and the Dim API for torch.export), brings native unbacked support to torch.export and make_fx, and completes the unbacked story [described earlier](./2026-01-20-backed-to-unbacked.md) by providing unified, predictable, declarative control over the shapes — and dispatch behavior — of compiled artifacts.
+> **TL;DR** – ShapesSpec fills several gaps in the existing tools (mark_dynamic / mark_unbacked, and the Dim API for torch.export), brings native unbacked support to torch.export and make_fx, and completes the unbacked story [described earlier](./2026-01-20-backed-to-unbacked.md) by providing unified, predictable, declarative control over the shapes — and dispatch behavior — of compiled artifacts.
 
 ## Motivating example
 
