@@ -86,11 +86,9 @@ This is a long-overdue addition. Unbacked shapes are a natural fit for export be
 
 While NamedDim + backed_size_oblivious is export-time sound, it's clunky. The new API replaces it with a cleaner story:
 
-Assumptions are a first-class field on ShapesSpec, instead of torch._check calls scattered through the model or embedded constraints.
-
-Invariants the model already establishes with torch._check are honored automatically — with NamedDim you had to restate them as explicit assumptions.
-
-No need to explicitly turn on backed_size_oblivious.
+- Assumptions are a first-class field on ShapesSpec, instead of torch._check calls scattered through the model or embedded constraints.
+- Invariants the model already establishes with torch._check are honored automatically — with NamedDim you had to restate them as explicit assumptions.
+- No need to explicitly turn on backed_size_oblivious.
 
 ## Dispatching to multiple specialized artifacts
 
