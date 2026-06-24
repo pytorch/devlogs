@@ -1,5 +1,5 @@
 ---
-title: "A new unbacked, descriptive dynamic-shapes API, unified across PyTorch's major compiler entry points"
+title: "ShapesSpec: A Unified, Descriptive Dynamic-Shapes API"
 author: Laith Sakka (@laithsakka), Xiao Fu (@fxdawnn)
 date: 2026-06-24
 tags: [dynamic_shapes, unbacked, export]
