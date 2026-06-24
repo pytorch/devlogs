@@ -9,7 +9,7 @@ A new unbacked, descriptive dynamic-shapes API, unified across PyTorch's major c
 
 > **TL;DR** – ShapesSpec: a new dynamic-shapes spec API for PyTorch's compiler entry points. It fills several gaps in the existing tools (mark_dynamic / mark_unbacked, and the Dim API for torch.export), brings native unbacked support to torch.export and make_fx, and completes the unbacked story described earlier by providing unified, predictable, declarative control over the shapes — and dispatch behavior — of compiled artifacts.
 
-Motivating example
+## Motivating example
 
 Consider the example below: the user has a function project(x, w) with a fast path for small batches and a general matmul path. The user wants to compile a dynamic-shape artifact that takes the fast path.
 
@@ -42,7 +42,7 @@ gm       = make_fx(project, dynamic_shapes=spec, tracing_mode="fake")(*example)
 
 The new API isn't syntactic sugar over mark_unbacked — it's a real spec language, with the following features:
 
-Properties
+## Properties
 
 Unified across compiler entry points. The same API works for torch.compile, torch.export, make_fx, and python_export (not yet landed) — potentially more in the future. One spec object, every entry point.
 
@@ -80,7 +80,7 @@ gm       = make_fx(project, tracing_mode="fake")(*example)
 
 Complete spec language. Supports tensors (TensorSpec), scalar int arguments (IntVar / ShapeVar), dicts (DictSpec), lists / tuples (SeqSpec), and user-defined objects of any Python class (ObjectSpec).
 
-Export now supports unbacked
+## Export now supports unbacked
 
 This is a long-overdue addition. Unbacked shapes are a natural fit for export because they guarantee no silent specialization during export time — which is an important export property. The current workaround is backed_size_oblivious, which is incomplete.
 
@@ -92,7 +92,7 @@ Invariants the model already establishes with torch._check are honored automatic
 
 No need to explicitly turn on backed_size_oblivious.
 
-Dispatching to multiple specialized artifacts
+## Dispatching to multiple specialized artifacts
 
 A common use case is to compile several specialized artifacts of the same function and dispatch to them depending on input at runtime. For now dispatch is the user's responsibility — the spec gives you the building block (specialized artifacts, cleanly separated), but selecting among them at runtime is yours to wire up. A higher-level dispatch abstraction is plausible follow-up work.
 
