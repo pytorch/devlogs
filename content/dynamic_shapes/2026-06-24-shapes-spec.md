@@ -132,4 +132,4 @@ def dispatch(x: torch.Tensor, weight: torch.Tensor) -> torch.Tensor:
     raise AssertionError(f"no kernel for B={x.shape[0]}")
 ```
 
-Note that isolate_recompiles=True matters here. See [Dynamo: isolate recompiles for torch.compile](../dynamo/2026-05-04-Dynamo-Isolate-Recompiles.md) to understand why it is needed.
+Note that isolate_recompiles=True matters here. See [Dynamo: isolate recompiles for torch.compile](https://docs.pytorch.org/devlogs/dynamo/2026-05-04-dynamo-isolate-recompiles/) to understand why it is needed.
