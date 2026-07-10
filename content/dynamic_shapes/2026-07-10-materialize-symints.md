@@ -18,6 +18,10 @@ warning; it will become a hard error soon, once we've fixed some dependencies
 in torch edge (executorch):
 
 ```python
+# `val` is the example/fake tensor stored on a node's meta — under dynamic
+# shapes its size()/stride() are SymInts, not plain ints.
+val = n.meta["val"]   # e.g. FakeTensor with shape (s0, s1)
+
 # ❌ WRONG — raw SymInts passed directly as arguments
 graph.call_function(
     torch.ops.aten.empty_strided.default,
