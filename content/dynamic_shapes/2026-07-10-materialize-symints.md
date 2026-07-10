@@ -12,7 +12,7 @@ tags: [dynamic_shapes, fx, symint, correctness]
 > values directly. This fixes a common, subtle class of correctness bugs —
 > we've already found **3 in PyTorch Inductor** and **6 across executorch's
 > ARM backend passes**. **Passing raw symbolic values will become a hard
-> error soon**, so migrate now.
+> error soon.**
 
 ## The bug pattern
 
