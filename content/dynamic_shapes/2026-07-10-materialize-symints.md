@@ -159,18 +159,6 @@ remove it.
 > a live query (`create_size_node`) or a frozen value (`materialize_symints`),
 > and picking wrong is a silent correctness bug.
 
-## What you should do
-
-1. If you maintain FX passes that create nodes with shape-dependent
-   arguments, look for raw `SymInt` usage — anywhere you pass
-   `x.size()` / `x.stride()` / `x.storage_offset()` (or expressions derived
-   from them) into `args`/`kwargs`.
-2. Replace with `create_size_node` / `create_stride_node` /
-   `create_storage_offset_node` for direct tensor-metadata queries, or
-   `materialize_symints(...)` for general symbolic expressions — remembering
-   to scope the insertion point.
-3. Run your tests — the warning will surface any remaining instances.
-
 ---
 
 PR: [pytorch/pytorch#186665](https://github.com/pytorch/pytorch/pull/186665)
