@@ -11,15 +11,13 @@ tags: [dynamic_shapes, fx, symint, correctness]
 > `create_storage_offset_node` helpers instead of passing raw symbolic
 > values directly. This fixes a common, subtle class of correctness bugs —
 > we've already found **3 in PyTorch Inductor** and **6 across executorch's
-> ARM backend passes** — and
-> **passing raw symbolic values will become a hard error soon**, so migrate
-> now.
+> ARM backend passes**. **Passing raw symbolic values will become a hard
+> error soon**, so migrate now.
 
 ## The bug pattern
 
 This is a pattern that's easy to write and hard to catch. Today it emits a
-warning; it will become a hard error soon, once we've fixed some dependencies
-in torch edge (executorch):
+warning; it will become a hard error soon, once we land the executorch fixes:
 
 ```python
 # `val` is the example/fake tensor stored on a node's meta — under dynamic
@@ -55,8 +53,10 @@ Concretely, storing raw `SymInt`s breaks:
 - **Symbolic reasoning** — downstream passes traverse the graph node-by-node.
   A `SymInt` buried in an arg tuple is invisible to them; it isn't a
   producer they can see, reason about, or rewrite.
-- **Graph serialization** — a raw `SymInt` isn't a serializable FX
-  `Argument`, so graphs carrying them can't round-trip.
+- **Graph serialization** — export's serializer records each symbol by its
+  *producer* (the input or node it comes from). A raw `SymInt` in an arg
+  tuple has no producer node, so there's nothing to reference on the way out
+  and nothing to re-bind on deserialize — the graph can't round-trip.
 - **Correctness** — passes that transform the graph silently skip these
   values, and because the symbol has no producer node it can end up
   undefined when the graph is codegen'd or replayed (the classic
