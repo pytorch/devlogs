@@ -9,7 +9,10 @@ tags: [dynamic_shapes, fx, symint, correctness]
 > values (`SymInt`, `SymFloat`, `SymBool`) as arguments, use the new
 > `Graph.materialize_symints` / `create_size_node` / `create_stride_node` /
 > `create_storage_offset_node` helpers instead of passing raw symbolic
-> values directly. This fixes a common, subtle class of correctness bugs.
+> values directly. This fixes a common, subtle class of correctness bugs —
+> we've already found **3 such bugs in PyTorch** (Inductor `joint_graph` and
+> two in `freezing`) plus several more in executorch — and **passing raw
+> symbolic values will become a hard error soon**, so migrate now.
 
 ## The bug pattern
 
