@@ -5,11 +5,12 @@ date: 2026-07-10
 tags: [dynamic_shapes, fx, symint, correctness]
 ---
 
-> **TL;DR** – If you're creating FX graph nodes that take symbolic shape
-> values (`SymInt`, `SymFloat`, `SymBool`) as arguments, use the new
-> `Graph.materialize_symints` / `create_size_node` / `create_stride_node` /
-> `create_storage_offset_node` helpers instead of passing raw symbolic
-> values directly. This fixes a common, subtle class of correctness bugs —
+> **TL;DR** – If you're creating FX graph nodes with raw `SymInt` arguments,
+> use `Graph.materialize_symints` or the targeted `create_size_node` /
+> `create_stride_node` / `create_storage_offset_node` helpers instead of
+> passing the raw symbolic value directly. (Raw `SymFloat` and `SymBool`
+> arguments are also prohibited, but these helpers currently only materialize
+> `SymInt` values.) This fixes a common, subtle class of correctness bugs —
 > we've already found **3 in PyTorch Inductor** and **6 across executorch's
 > ARM backend passes**. **Passing raw symbolic values will become a hard
 > error soon.**
@@ -116,7 +117,7 @@ with graph.inserting_before(output_node):
 | `Graph.create_stride_node(tensor, dim)` | `Node` | A node for `tensor.stride(dim)` |
 | `Graph.create_storage_offset_node(tensor)` | `Node` | A node for `tensor.storage_offset()` |
 
-## create_size_node vs. materialize_symints: live query vs. freeze
+## create_size_node vs. materialize_symints: live query vs. input-rooted
 
 These look similar, and in the common case they emit the *same* node — but
 they are not equivalent, and picking the wrong one is its own subtle bug.
@@ -144,11 +145,14 @@ the **new** stride. `materialize_symints`, by contrast, roots at the
 symbol's true origin (the graph input), so the value is "what this symbol is
 at runtime" — determined by the inputs and **independent** of later layout
 changes to `%x`. Use `create_size_node` when you want a live query on a
-specific node; use `materialize_symints` when you want to *freeze* the
-trace-time value.
+specific node; use `materialize_symints` when you want the value re-rooted on
+the symbol's original producer. (Note: "re-rooted" does not mean
+constant-folded — `materialize_symints` preserves the symbolic expression and
+its provenance; it just anchors it to the input the symbol came from rather
+than to `%x`.)
 
-A concrete example: in Inductor's `joint_graph` pass we want the frozen
-size/stride of a to-be-eliminated meta tensor, so we use
+A concrete example: in Inductor's `joint_graph` pass we want the
+input-rooted size/stride of a to-be-eliminated meta tensor, so we use
 `materialize_symints` — using `create_size_node(n, d)` there would query `n`
 and pin it alive, blocking the `eliminate_dead_code()` that's supposed to
 remove it.
