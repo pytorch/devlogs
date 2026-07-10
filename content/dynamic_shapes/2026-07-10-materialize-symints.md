@@ -13,7 +13,9 @@ tags: [dynamic_shapes, fx, symint, correctness]
 
 ## The bug pattern
 
-This is a pattern that's easy to write and hard to catch:
+This is a pattern that's easy to write and hard to catch. Today it emits a
+warning; it will become a hard error soon, once we've fixed some dependencies
+in torch edge (executorch):
 
 ```python
 # ❌ WRONG — raw SymInts passed directly as arguments
