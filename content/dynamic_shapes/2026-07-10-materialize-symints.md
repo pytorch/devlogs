@@ -159,22 +159,6 @@ remove it.
 > a live query (`create_size_node`) or a frozen value (`materialize_symints`),
 > and picking wrong is a silent correctness bug.
 
-## Migration status
-
-- **Now:** Passing raw `SymInt`/`SymFloat`/`SymBool` values to
-  `Graph.create_node(op=call_function/call_method/call_module)` emits a
-  warning:
-
-  ```
-  Raw SymInt value (s0) passed as argument to Graph.create_node(...).
-  Use create_*_node() helpers for tensor metadata queries or
-  materialize_symints() for general symbolic expressions.
-  ```
-
-- **Soon:** This becomes a `RuntimeError` once all downstream consumers
-  (including executorch) have migrated. That flip is staged as a follow-up
-  so executorch's PyTorch pin can roll forward first.
-
 ## What you should do
 
 1. If you maintain FX passes that create nodes with shape-dependent
