@@ -153,6 +153,12 @@ size/stride of a to-be-eliminated meta tensor, so we use
 and pin it alive, blocking the `eliminate_dead_code()` that's supposed to
 remove it.
 
+> **TODO:** We could potentially auto-materialize raw SymInt args instead of
+> hard-erroring on them. For now we ask callers to do it explicitly, because
+> of exactly the distinction above — only the caller knows whether they want
+> a live query (`create_size_node`) or a frozen value (`materialize_symints`),
+> and picking wrong is a silent correctness bug.
+
 ## Migration status
 
 - **Now:** Passing raw `SymInt`/`SymFloat`/`SymBool` values to
