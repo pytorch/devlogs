@@ -8,9 +8,8 @@ tags: [dynamic_shapes, fx, symint, correctness]
 > **TL;DR** – If you're creating FX graph nodes with raw `SymInt` arguments,
 > use `Graph.materialize_symints` or the targeted `create_size_node` /
 > `create_stride_node` / `create_storage_offset_node` helpers instead of
-> passing the raw symbolic value directly. (Raw `SymFloat` and `SymBool`
-> arguments are also prohibited, but these helpers currently only materialize
-> `SymInt` values.) This fixes a common, subtle class of correctness bugs —
+> passing the raw symbolic value directly. This fixes a common, subtle class
+> of correctness bugs —
 > we've already found **3 in PyTorch Inductor** and **6 across executorch's
 > ARM backend passes**. **Passing raw symbolic values will become a hard
 > error soon.**
