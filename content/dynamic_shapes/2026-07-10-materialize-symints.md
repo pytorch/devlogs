@@ -32,7 +32,7 @@ graph.call_function(
 )
 ```
 
-Under dynamic shapes, `val.size()` and `val.stride()` return `SymInt`
+Under dynamic shapes, `val.size()` and `val.stride()` may return `SymInt`
 values, not proper FX nodes. When those get stored on a node's `args`, they
 are baked into the graph as opaque symbolic objects rather than as real
 graph nodes.
