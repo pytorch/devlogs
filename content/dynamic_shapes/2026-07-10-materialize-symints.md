@@ -189,6 +189,4 @@ remove it.
 
 ---
 
-Diff: D107938876 &nbsp;|&nbsp; PR: [pytorch/pytorch#186665](https://github.com/pytorch/pytorch/pull/186665)
-
-Questions? Ping me or drop a comment.
+PR: [pytorch/pytorch#186665](https://github.com/pytorch/pytorch/pull/186665)
