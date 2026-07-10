@@ -33,7 +33,20 @@ graph.call_function(
 Under dynamic shapes, `val.size()` and `val.stride()` return `SymInt`
 values, not proper FX nodes. When those get stored on a node's `args`, they
 are baked into the graph as opaque symbolic objects rather than as real
-graph nodes. This breaks:
+graph nodes.
+
+**The core invariant this breaks:** every `SymInt` in a graph must have a
+*producer* — the graph has to know where the value comes from at runtime.
+A symbol like `s0` is only meaningful because something produces it: an
+input integer placeholder, or an input tensor's size (`x.size(0)`), stride,
+or storage offset. If you store the raw `SymInt` directly, you throw that
+provenance away — you keep the symbol but lose the "where do I get it from"
+link. The correct representation is a *reference to the node that produces
+it*: the placeholder node for an integer input, or a `x.size(index)` /
+`x.stride(index)` node for a tensor dimension. That's exactly what the
+helpers below emit.
+
+Concretely, storing raw `SymInt`s breaks:
 
 - **Symbolic reasoning** — downstream passes traverse the graph node-by-node.
   A `SymInt` buried in an arg tuple is invisible to them; it isn't a
@@ -41,9 +54,9 @@ graph nodes. This breaks:
 - **Graph serialization** — a raw `SymInt` isn't a serializable FX
   `Argument`, so graphs carrying them can't round-trip.
 - **Correctness** — passes that transform the graph silently skip these
-  values, and the symbol may end up undefined when the graph is codegen'd
-  or replayed (the classic `NameError: name 's48' is not defined` in
-  `fx_graph_runnable` repros).
+  values, and because the symbol has no producer node it can end up
+  undefined when the graph is codegen'd or replayed (the classic
+  `NameError: name 's48' is not defined` in `fx_graph_runnable` repros).
 
 The bug is insidious because it often works at trace time (the Python value
 is correct), then produces wrong behavior — or a hard failure — during
