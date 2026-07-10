@@ -114,19 +114,34 @@ with graph.inserting_before(output_node):
 
 ## create_size_node vs. materialize_symints: live query vs. freeze
 
-These look similar but have different semantics, and picking the wrong one
-is its own subtle bug.
+These look similar, and in the common case they emit the *same* node — but
+they are not equivalent, and picking the wrong one is its own subtle bug.
 
-- **`create_size_node(%x, 0)`** emits `aten.sym_size.int(%x, 0)` — a *live
-  query* on `%x`. If a later pass mutates `%x`'s layout and `FakeTensorProp`
-  re-runs, the node's `meta["val"]` is overwritten with the **new** stride.
-  Use this when you want the value to track the producer.
+The distinction is **who the producer is**:
 
-- **`materialize_symints([...])`** walks the sympy expression and rebuilds
-  it from the existing producer of each *symbol* (typically an input
-  placeholder). The result is "what this symbol is at runtime," which is
-  determined by the graph inputs and is **independent** of later layout
-  changes to `%x`. Use this when you want to *freeze* the trace-time value.
+- **`create_size_node(%x, 0)`** unconditionally emits
+  `aten.sym_size.int(%x, 0)` — a *live query* on `%x`, whatever `%x` is.
+
+- **`materialize_symints([s])`** looks up the actual *producer* of the
+  symbol `s` (by scanning placeholders / unbacked bindings) and roots the
+  subgraph there — typically the input placeholder the symbol originates
+  from.
+
+> **If `%x` is itself the producer, there is no difference.** When `%x` is
+> the input placeholder the symbol originates from (`s0 == x.size(0)`), both
+> calls emit the exact same `aten.sym_size.int(%x, 0)` node. The two only
+> come apart in the case below.
+
+They diverge when **`%x` is not the producer** — when it's some intermediate
+node that merely happens to carry that shape. Then `create_size_node` pins a
+live query on that intermediate `%x`: if a later pass mutates `%x`'s layout
+and `FakeTensorProp` re-runs, the node's `meta["val"]` is overwritten with
+the **new** stride. `materialize_symints`, by contrast, roots at the
+symbol's true origin (the graph input), so the value is "what this symbol is
+at runtime" — determined by the inputs and **independent** of later layout
+changes to `%x`. Use `create_size_node` when you want a live query on a
+specific node; use `materialize_symints` when you want to *freeze* the
+trace-time value.
 
 A concrete example: in Inductor's `joint_graph` pass we want the frozen
 size/stride of a to-be-eliminated meta tensor, so we use
