@@ -149,25 +149,6 @@ size/stride of a to-be-eliminated meta tensor, so we use
 and pin it alive, blocking the `eliminate_dead_code()` that's supposed to
 remove it.
 
-## A real before/after
-
-From the export runtime-assertions pass — replacing a hand-rolled
-`sym_size.int` call with the helper:
-
-```python
-# Before
-dim_node = module.graph.call_function(
-    torch.ops.aten.sym_size.int, (node, dim), {},
-)
-
-# After
-dim_node = module.graph.create_size_node(node, dim)
-```
-
-The helper also carries the tensor metadata forward onto the new node
-(`meta["val"]` / `meta["example_value"]`), which the raw `call_function`
-form did not.
-
 ## Migration status
 
 - **Now:** Passing raw `SymInt`/`SymFloat`/`SymBool` values to
