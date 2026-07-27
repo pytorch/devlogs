@@ -19,6 +19,7 @@ PyTorch developers regularly produce deep technical content about design decisio
 | [`dynamic_shapes/`](./content/dynamic_shapes/) | Unbacked shapes, guards, symbol semantics |
 | [`dispatcher/`](./content/dispatcher/) | Dispatch keys, operator registry, extensibility |
 | [`dynamo/`](./content/dynamo/) | TorchDynamo graph capture |
+| [`compiler/`](./content/compiler/) | torch.compile architecture and graph design |
 | [`inductor/`](./content/inductor/) | TorchInductor codegen |
 | [`distributed/`](./content/distributed/) | FSDP, DTensor, c10d |
 | [`export/`](./content/export/) | torch.export, AOTInductor |
