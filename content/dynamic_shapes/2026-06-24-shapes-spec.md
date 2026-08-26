@@ -5,7 +5,9 @@ date: 2026-06-24
 tags: [dynamic_shapes, unbacked, export]
 ---
 
-> **TL;DR** – A new dynamic shapes API is available and ready to use! It provides a unified, consistent way for specifying dynamic specs across compile, export and make_fx, brings native unbacked support to torch.export and make_fx, and completes the unbacked story [described earlier](./2026-01-20-backed-to-unbacked.md) by providing unified, predictable, declarative control over the shapes of compiled artifacts.
+> **TL;DR** – A new dynamic shapes API is available and ready to use! It provides a unified, consistent way for specifying dynamic specs across `torch.compile`, `torch.export` (strict and non-strict), `make_fx`, and `python_export` (soon), and it brings native unbacked support to `torch.export` and `make_fx` — unbacked for export is finally here.
+
+This is an unbacked-first API — see [Backed to Unbacked: From Guardable to Guardless Shapes in PyTorch](./2026-01-20-backed-to-unbacked.md) for the background on that shift. The spec you write is a contract that tracing is required not to violate. That is a different model from backed dynamic shapes, where markings are hints and the compiler is free to silently specialize and recompile. With unbacked shapes nothing is inferred for you, so specs and constraints are stated explicitly ahead of time — including ahead-of-time `assumptions` about shapes and the relations between them, instead of `torch._check` calls sprinkled through model code.
 
 ## Motivating example
 
