@@ -9,20 +9,20 @@
     <linearGradient id="panel-left" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#eff6ff"/>
       <stop offset="0.55" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#f0fdf4"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
     </linearGradient>
     <linearGradient id="panel-right" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff7ed"/>
+      <stop offset="0" stop-color="#faf5ff"/>
       <stop offset="0.55" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#f0fdf4"/>
+      <stop offset="1" stop-color="#fdf4ff"/>
     </linearGradient>
     <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffffff"/>
       <stop offset="1" stop-color="#f8fafc"/>
     </linearGradient>
     <linearGradient id="collective-fill" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#dcfce7"/>
-      <stop offset="1" stop-color="#a7f3d0"/>
+      <stop offset="0" stop-color="#fef3c7"/>
+      <stop offset="1" stop-color="#fde68a"/>
     </linearGradient>
     <linearGradient id="divider" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#94a3b8" stop-opacity="0"/>
@@ -41,10 +41,10 @@
       </feMerge>
     </filter>
     <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1478cf"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0072b2"/>
     </marker>
     <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e83232"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#cc79a7"/>
     </marker>
     <style>
       .title { font: 700 30px Inter, ui-sans-serif, system-ui, sans-serif; fill: #0f172a; letter-spacing: -0.5px; }
@@ -53,11 +53,11 @@
       .small { font: 650 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
       .box { fill: url(#card); stroke: #334155; stroke-width: 2.5; filter: url(#shadow); }
       .split { stroke: #94a3b8; stroke-width: 2; }
-      .collective { fill: url(#collective-fill); stroke: #16a34a; stroke-width: 2.5; filter: url(#shadow); }
-      .forward { fill: #0875d1; }
-      .backward { fill: #e52f37; }
-      .fwd-line { fill: none; stroke: #1681d8; stroke-width: 3.5; stroke-linecap: round; marker-end: url(#arrow-blue); }
-      .bwd-line { fill: none; stroke: #ef3340; stroke-width: 3.5; stroke-linecap: round; marker-end: url(#arrow-red); }
+      .collective { fill: url(#collective-fill); stroke: #d97706; stroke-width: 2.5; filter: url(#shadow); }
+      .forward { fill: #0072b2; }
+      .backward { fill: #a64d83; }
+      .fwd-line { fill: none; stroke: #0072b2; stroke-width: 3.5; stroke-linecap: round; marker-end: url(#arrow-blue); }
+      .bwd-line { fill: none; stroke: #cc79a7; stroke-width: 3.5; stroke-linecap: round; marker-end: url(#arrow-red); }
       .panel { stroke-width: 1.5; }
       .legend { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; filter: url(#shadow); }
     </style>
@@ -65,7 +65,7 @@
 
   <rect width="1800" height="1000" fill="url(#background)"/>
   <rect class="panel" x="18" y="16" width="835" height="968" rx="30" fill="url(#panel-left)" stroke="#bfdbfe"/>
-  <rect class="panel" x="947" y="16" width="835" height="968" rx="30" fill="url(#panel-right)" stroke="#fed7aa"/>
+  <rect class="panel" x="947" y="16" width="835" height="968" rx="30" fill="url(#panel-right)" stroke="#e9d5ff"/>
   <text class="title" x="390" y="54" text-anchor="middle">SP=on</text>
   <text class="subtitle" x="390" y="82" text-anchor="middle">SEQUENCE-SHARDED BOUNDARIES</text>
   <text class="title" x="1410" y="54" text-anchor="middle">SP=off</text>
@@ -73,9 +73,9 @@
   <line x1="900" y1="76" x2="900" y2="970" stroke="url(#divider)" stroke-width="3"/>
 
   <rect class="legend" x="834" y="18" width="132" height="106" rx="18"/>
-  <circle cx="858" cy="54" r="7" fill="#1478cf"/>
+  <circle cx="858" cy="54" r="7" fill="#0072b2"/>
   <text class="small forward" x="876" y="60">FWD</text>
-  <circle cx="858" cy="91" r="7" fill="#e83232"/>
+  <circle cx="858" cy="91" r="7" fill="#cc79a7"/>
   <text class="small backward" x="876" y="97">BWD</text>
 
   <!-- Sequence parallelism enabled. -->

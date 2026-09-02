@@ -9,7 +9,7 @@ tags: [torchtitan, distributed, dtensor, spmd, sharding]
 >
 > TorchTitan now uses [`spmd_types`](https://github.com/meta-pytorch/spmd_types) as its default backend for distributed model computation. Authors specify sharding contracts and collectives explicitly, with optional typechecking to catch distributed-correctness errors during development.
 > At runtime, the typechecking machinery can be erased so forward and backward execute on plain tensors. Coupled FWD-BWD typing and support for both global and local SPMD also make distributed behavior easier to express and reason about.
-> Across our debug-model benchmarks, `spmd_types` improved eager throughput by up to 45% and Inductor throughput by up to 18% over `partial_dtensor`. FSDP2 continues to use DTensor as the persistent storage representation outside model computation.
+> Across our repeated debug-model benchmarks, `spmd_types` improved eager throughput by up to 46% and Inductor throughput by 5-9% over `partial_dtensor`, without a meaningful peak-memory increase. FSDP2 continues to use DTensor as the persistent storage representation outside model computation.
 
 TorchTitan aims for a unified model definition across single-GPU execution and any
 1D-to-ND composition of parallelisms, for both training and inference. A model's `forward()`
@@ -227,19 +227,43 @@ cross-entropy, replacing DTensor's `MaskPartial` and the implicit `loss_parallel
 
 ## Performance comparison
 
-Erasure mode is intended to remove DTensor's runtime dispatch and shard-propagation overhead without requiring compilation or cudagraphs. The perf measurements below use debug models on 8 H100 GPUs for 50 training steps, measuring steady-state TPS, using local batch size 8, context length 2048. Llama 3 uses selective activation checkpointing; the MoE configurations use full activation checkpointing.
+Erasure mode is intended to remove DTensor's runtime dispatch and shard-propagation overhead without requiring compilation or cudagraphs. The measurements below use TorchTitan's debug models on 8 H100 GPUs, LBS 8, and context length 2048. Llama 3 uses selective AC; the MoE configurations use full AC.
 
-| Model and parallel configuration | Execution mode | `partial_dtensor` TPS | `spmd_types` TPS | Change / observation |
-| --- | --- | ---: | ---: | --- |
-| Llama 3, FSDP=4, TP=2 | Eager | 47,393 | 67,777 | **+43.0%** |
-| Llama 3, FSDP=4, TP=2 | Eager + CUDA graphs | 235,810 | 255,280 | **+8.3%** |
-| Llama 3, FSDP=4, TP=2 | Compile (`inductor`) | 104,738 | 120,154 | **+14.7%** |
-| Qwen3 MoE, FSDP=4, TP=2, EP=8 | Eager | 29,950 | 32,237 | **+7.6%** |
-| Qwen3 MoE, FSDP=4, TP=2, EP=8 | Eager + CUDA graphs | 31,472 | 27,355 | **-13.1%** |
-| Qwen3 MoE, FSDP=4, TP=2, EP=8 | Compile (`inductor`) | 41,214 | 48,551 | **+17.8%** |
-| DeepSeek V3, FSDP=4, TP=2, EP=8 | Eager | 36,430 | 52,785 | **+44.9%** |
-| DeepSeek V3, FSDP=4, TP=2, EP=8 | Eager + CUDA graphs | 82,020 | 83,894 | **+2.3%** |
-| Qwen3.5 MoE, FSDP=4, TP=2, EP=8 | Eager | 24,571 | 31,039 | **+26.3%** |
+| Model and parallel configuration | Execution mode | `partial_dtensor` TPS [range] | `spmd_types` TPS [range] | Paired change [95% CI] | Peak memory, partial / SPMD |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Llama 3, FSDP=4, TP=2 | Eager | 48,517 [47,632, 48,732] | 69,758 [68,244, 70,094] | **+43.69%** [+42.00%, +47.50%] | 0.49 / 0.49 GiB |
+| Llama 3, FSDP=4, TP=2 | Eager + CUDA graphs | 224,294 [218,588, 232,758] | 230,286 [221,063, 233,392] | **+1.35%** [+0.18%, +6.75%] | 0.52 / 0.52 GiB |
+| Llama 3, FSDP=4, TP=2 | Compile (`inductor`) | 102,578 [101,309, 105,472] | 112,368 [109,610, 114,913] | **+9.47%** [+6.10%, +10.99%] | 0.42 / 0.42 GiB |
+| Qwen3 MoE, FSDP=4, TP=2, EP=8 | Eager | 39,074 [38,110, 39,888] | 54,272 [48,598, 56,854] | **+41.89%** [+22.26%, +47.27%] | 0.69 / 0.69 GiB |
+| Qwen3 MoE, FSDP=4, TP=2, EP=8 | Eager + CUDA graphs | 55,699 [47,076, 59,291] | 48,972 [44,836, 57,007] | **-0.83%** [-23.39%, +2.75%] | 0.71 / 0.71 GiB |
+| Qwen3 MoE, FSDP=4, TP=2, EP=8 | Compile (`inductor`) | 81,222 [79,185, 86,625] | 86,374 [80,493, 91,370] | **+5.45%** [+3.01%, +9.17%] | 0.73 / 0.73 GiB |
+| DeepSeek V3, FSDP=4, TP=2, EP=8 | Eager | 33,128 [32,742, 33,290] | 48,376 [45,580, 48,686] | **+46.32%** [+36.15%, +47.85%] | 0.85 / 0.86 GiB |
+| DeepSeek V3, FSDP=4, TP=2, EP=8 | Eager + CUDA graphs (HybridEP, custom all-gather off) | 67,437 [57,856, 72,466] | 71,214 [67,340, 73,661] | **+7.45%** [-3.16%, +12.89%] | 0.80 / 0.80 GiB |
+| DeepSeek V3, FSDP=4, TP=2, EP=8 | Compile (`inductor`) | 61,226 [60,728, 62,052] | 64,515 [62,808, 67,108] | **+4.68%** [+1.63%, +8.29%] | 0.79 / 0.79 GiB |
+
+The repeated runs show large eager gains of 42-46%. Inductor gains are smaller at 5-9%, and CUDA graphs largely erase the runtime-dispatch difference. Llama 3 retains a small gain, while the Qwen3 and DeepSeek V3 confidence intervals include zero. Peak memory is effectively unchanged.
+
+Inductor compile perf has a clearer gap because TorchTitan's compile usage is not full-graph but regional, and DTensor subclass-related overhead can still be obvious, when outside of compiled regions. TorchTitan's chunked loss compiles the inner loss function, but leaves the chunking wrapper, applied on DTensor activations in eager. This leaves obvious tensor subclass wrap/unwrap overhead, particularly for the chunking [`local_map()` call](https://github.com/pytorch/torchtitan/blob/eae4563ade4bc6e877f5e181388e64fcf8e0ec48/torchtitan/components/loss.py#L625-L635):
+
+```python
+def _chunk_local(t):
+    chunk_len = t.shape[0] // num_chunks
+    return tuple(
+        chunk.contiguous()
+        for chunk in torch.split(t, [chunk_len] * num_chunks, dim=0)
+    )
+
+local_map(
+    _chunk_local,
+    out_placements=(t.placements,) * num_chunks,
+    in_placements=(t.placements,),
+    device_mesh=t.device_mesh,
+)(t)
+```
+
+We see an overall >20% slowdown for loss computation, and this demonstrates how local-global SPMD transitions aren't so seamless with DTensor, both in terms of authoring (refactor and wrap a simple chunk call because it's not GSPMD; chunk then shard != shard then chunk) as well as overhead (8 added `_FromTorchTensor` calls from the profile, 1 per chunk):
+
+<img src="/devlogs/images/distributed/spmd-types-chunked-loss-local-map-profile.png" alt="Profiler trace for chunked loss; local_map unwraps input DTensor, chunks, and rewraps eight DTensor outputs" style="width: 100%; max-width: 1200px;">
 
 Shape-varying inference decoding is another likely beneficiary because DTensor's shard-propagation cache keys on shape. Preliminary
 eager TitanRL measurements showed substantial gains, but a controlled public benchmark has not landed yet; compiled or padded
