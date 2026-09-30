@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 256" width="800" height="256" role="img" aria-label="record_stream: every allocation on the AG stream happens before the previous block&#x27;s event is polled, so each layer gets a new block">
+<title>record_stream: every allocation on the AG stream happens before the previous block&#x27;s event is polled, so each layer gets a new block</title>
+<style>
+text{font-family:Inter,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;font-size:13px}
+.mono{font-family:SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
+.lane{font-weight:600}
+.box{stroke-width:1.5}
+.sep{stroke-width:1}
+.arrow{stroke-width:1.5;fill:none}
+.wait{stroke-width:1.2;stroke-dasharray:4 3}
+.bad{stroke-width:2}
+.span{stroke-width:1.2;fill:none}
+.ink{fill:#333333}
+.muted{fill:#767676}
+.bad-t{fill:#e34948}
+.sep{stroke:#e0e0e0}
+.arrow{stroke:#767676}
+.arrowhead{fill:#767676}
+.wait{stroke:#767676;fill:none}
+.bad{stroke:#e34948;fill:url(#hatch-bad)}
+.hatch-bad-l{stroke:#e34948}
+.span{stroke:#333333}
+.evt{fill:#333333}
+.fA{fill:#2a78d6;fill-opacity:.22;stroke:#2a78d6}
+.hA{fill:url(#hatch-A);stroke:#2a78d6;stroke-dasharray:4 3}
+.hlA{stroke:#2a78d6}
+.fB{fill:#eb6834;fill-opacity:.22;stroke:#eb6834}
+.hB{fill:url(#hatch-B);stroke:#eb6834;stroke-dasharray:4 3}
+.hlB{stroke:#eb6834}
+.fC{fill:#1baf7a;fill-opacity:.22;stroke:#1baf7a}
+.hC{fill:url(#hatch-C);stroke:#1baf7a;stroke-dasharray:4 3}
+.hlC{stroke:#1baf7a}
+.fD{fill:#4a3aa7;fill-opacity:.22;stroke:#4a3aa7}
+.hD{fill:url(#hatch-D);stroke:#4a3aa7;stroke-dasharray:4 3}
+.hlD{stroke:#4a3aa7}
+.fN{fill:#8a8a8a;fill-opacity:.22;stroke:#8a8a8a}
+.hN{fill:url(#hatch-N);stroke:#8a8a8a;stroke-dasharray:4 3}
+.hlN{stroke:#8a8a8a}
+@media (prefers-color-scheme: dark){
+.ink{fill:#cccccc}
+.muted{fill:#8a8a8a}
+.bad-t{fill:#e66767}
+.sep{stroke:#3a3a3a}
+.arrow{stroke:#8a8a8a}
+.arrowhead{fill:#8a8a8a}
+.wait{stroke:#8a8a8a;fill:none}
+.bad{stroke:#e66767;fill:url(#hatch-bad)}
+.hatch-bad-l{stroke:#e66767}
+.span{stroke:#cccccc}
+.evt{fill:#cccccc}
+.fA{fill:#3987e5;fill-opacity:.22;stroke:#3987e5}
+.hA{fill:url(#hatch-A);stroke:#3987e5;stroke-dasharray:4 3}
+.hlA{stroke:#3987e5}
+.fB{fill:#d95926;fill-opacity:.22;stroke:#d95926}
+.hB{fill:url(#hatch-B);stroke:#d95926;stroke-dasharray:4 3}
+.hlB{stroke:#d95926}
+.fC{fill:#199e70;fill-opacity:.22;stroke:#199e70}
+.hC{fill:url(#hatch-C);stroke:#199e70;stroke-dasharray:4 3}
+.hlC{stroke:#199e70}
+.fD{fill:#9085e9;fill-opacity:.22;stroke:#9085e9}
+.hD{fill:url(#hatch-D);stroke:#9085e9;stroke-dasharray:4 3}
+.hlD{stroke:#9085e9}
+.fN{fill:#9a9a9a;fill-opacity:.22;stroke:#9a9a9a}
+.hN{fill:url(#hatch-N);stroke:#9a9a9a;stroke-dasharray:4 3}
+.hlN{stroke:#9a9a9a}
+}</style>
+<defs>
+<pattern id="hatch-A" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hlA" x1="0" y1="0" x2="0" y2="7" stroke-width="2" stroke-opacity=".55"/></pattern>
+<pattern id="hatch-B" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hlB" x1="0" y1="0" x2="0" y2="7" stroke-width="2" stroke-opacity=".55"/></pattern>
+<pattern id="hatch-C" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hlC" x1="0" y1="0" x2="0" y2="7" stroke-width="2" stroke-opacity=".55"/></pattern>
+<pattern id="hatch-D" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hlD" x1="0" y1="0" x2="0" y2="7" stroke-width="2" stroke-opacity=".55"/></pattern>
+<pattern id="hatch-N" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hlN" x1="0" y1="0" x2="0" y2="7" stroke-width="2" stroke-opacity=".55"/></pattern>
+<pattern id="hatch-bad" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="hatch-bad-l" x1="0" y1="0" x2="0" y2="7" stroke-width="2" stroke-opacity=".55"/></pattern>
+</defs>
+<text class="ink" x="136.0" y="39.5" text-anchor="end" font-weight="600">AG stream</text>
+<text class="ink" x="136.0" y="73.5" text-anchor="end" font-weight="600">compute stream</text>
+<text class="muted" x="136.0" y="127.9" text-anchor="end">block A</text>
+<text class="muted" x="136.0" y="161.9" text-anchor="end">block B</text>
+<text class="muted" x="136.0" y="195.9" text-anchor="end">block C</text>
+<text class="muted" x="136.0" y="229.9" text-anchor="end">block D</text>
+<line class="sep" x1="12" y1="96.2" x2="788" y2="96.2"/>
+<rect class="box fA" x="151.0" y="23.0" width="82.0" height="24" rx="4"/>
+<text class="ink" x="192.0" y="39.5" text-anchor="middle">AG L1</text>
+<rect class="box fB" x="235.0" y="23.0" width="82.0" height="24" rx="4"/>
+<text class="ink" x="276.0" y="39.5" text-anchor="middle">AG L2</text>
+<rect class="box fC" x="319.0" y="23.0" width="82.0" height="24" rx="4"/>
+<text class="ink" x="360.0" y="39.5" text-anchor="middle">AG L3</text>
+<rect class="box fD" x="403.0" y="23.0" width="82.0" height="24" rx="4"/>
+<text class="ink" x="444.0" y="39.5" text-anchor="middle">AG L4</text>
+<rect class="box fA" x="235.0" y="57.0" width="124.0" height="24" rx="4"/>
+<text class="ink" x="297.0" y="73.5" text-anchor="middle">fwd L1</text>
+<rect class="box fB" x="361.0" y="57.0" width="124.0" height="24" rx="4"/>
+<text class="ink" x="423.0" y="73.5" text-anchor="middle">fwd L2</text>
+<rect class="box fC" x="487.0" y="57.0" width="124.0" height="24" rx="4"/>
+<text class="ink" x="549.0" y="73.5" text-anchor="middle">fwd L3</text>
+<rect class="box fD" x="613.0" y="57.0" width="124.0" height="24" rx="4"/>
+<text class="ink" x="675.0" y="73.5" text-anchor="middle">fwd L4</text>
+<rect class="box fA" x="151.0" y="111.4" width="208.0" height="24" rx="4"/>
+<text class="ink" x="255.0" y="127.9" text-anchor="middle">L1 params</text>
+<rect class="box fB" x="235.0" y="145.4" width="250.0" height="24" rx="4"/>
+<text class="ink" x="360.0" y="161.9" text-anchor="middle">L2 params</text>
+<rect class="box fC" x="319.0" y="179.4" width="292.0" height="24" rx="4"/>
+<text class="ink" x="465.0" y="195.9" text-anchor="middle">L3 params</text>
+<rect class="box fD" x="403.0" y="213.4" width="334.0" height="24" rx="4"/>
+<text class="ink" x="570.0" y="229.9" text-anchor="middle">L4 params</text>
+<rect class="box hA" x="361.0" y="111.4" width="418.0" height="24" rx="4"/>
+<text class="ink" x="570.0" y="127.9" text-anchor="middle">freed; waiting for a later malloc to poll its event</text>
+<rect class="box hB" x="487.0" y="145.4" width="292.0" height="24" rx="4"/>
+<rect class="box hC" x="613.0" y="179.4" width="166.0" height="24" rx="4"/>
+<path class="arrow" d="M234.0,47.0 C234.0,51.5 234.0,51.5 234.0,52.0"/>
+<path class="arrowhead" d="M229.5,49.0 L238.5,49.0 L234.0,56.0 Z"/>
+<path class="arrow" d="M318.0,47.0 C318.0,51.5 360.0,51.5 360.0,52.0"/>
+<path class="arrowhead" d="M355.5,49.0 L364.5,49.0 L360.0,56.0 Z"/>
+<path class="arrow" d="M402.0,47.0 C402.0,51.5 486.0,51.5 486.0,52.0"/>
+<path class="arrowhead" d="M481.5,49.0 L490.5,49.0 L486.0,56.0 Z"/>
+<path class="arrow" d="M486.0,47.0 C486.0,51.5 612.0,51.5 612.0,52.0"/>
+<path class="arrowhead" d="M607.5,49.0 L616.5,49.0 L612.0,56.0 Z"/>
+</svg>
