@@ -137,7 +137,7 @@ In distributed training, parallelism settings and recompute choices change memor
 
 ## Closing Thoughts
 
-That's it for this post. I hope you learned something new from these examples. I started with the familiar idea of replaying forward to save memory, then found myself thinking about collectives, side effects, and tensors kept alive for computations that backward never needed (`recompute_needs_tensor`). If you also tend to think about one GPU first and found this post interesting, I shared a similar journey while integrating MXFP8 into TorchTitan. We are also exploring activation offloading, another optimization to reduce memory footprint. Stay tuned!
+That's it for this post. I hope you learned something new from these examples. I started with the familiar idea of replaying forward to save memory, then found myself thinking about collectives, side effects, and tensors kept alive for computations that backward never needed (`recompute_needs_tensor`). We are also exploring activation offloading, another optimization to reduce memory footprint. Stay tuned!
 
 ## References
 
